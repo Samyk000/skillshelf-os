@@ -28,10 +28,20 @@ Generic AI prompts lead to "default" looks. `SKILL.md` injects professional desi
 
 ---
 
-## 🗂️ The Collection
-*Standardized grid previews. Click any card to explore the design DNA.*
+<div align="center">
+  <h3>🌐 Explore on the Web</h3>
+  <a href="https://skillshelf-liart.vercel.app">
+    <img src="https://img.shields.io/badge/EXPLORE_ALL_SKILLS_LIVE-C9FF45?style=for-the-badge&logo=vercel&logoColor=000000&labelColor=000000" alt="Skillshelf Webapp" height="45" />
+  </a>
+  <p><i>Browse all design systems visually with live previews, search, and premium components.</i></p>
+</div>
 
-<details open>
+---
+
+## 🗂️ The Collection
+*Standardized grid previews. Click a category to expand.*
+
+<details>
 <summary><b>💰 Finance & Wealth</b> — <i>Sophisticated and high-performance.</i></summary>
 <br>
 
@@ -41,7 +51,7 @@ Generic AI prompts lead to "default" looks. `SKILL.md` injects professional desi
 | *Obsidian Fintech* | *Warm Minimalist* | *Organic FinTech* |
 </details>
 
-<details open>
+<details>
 <summary><b>🛠️ Productivity & Admin</b> — <i>Structured and data-dense.</i></summary>
 <br>
 
@@ -51,7 +61,7 @@ Generic AI prompts lead to "default" looks. `SKILL.md` injects professional desi
 | *Developer IDE* | *Bento Kanban* | *Data Analytics* |
 </details>
 
-<details open>
+<details>
 <summary><b>🚀 Future-Forward SaaS</b> — <i>Modern and experimental.</i></summary>
 <br>
 
