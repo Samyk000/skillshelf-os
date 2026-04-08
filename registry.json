@@ -82,14 +82,15 @@
       "title": "Big Shaped",
       "category": "Design System",
       "tags": [
-        "dramatic",
-        "animated",
+        "dark",
+        "design system",
+        "glassmorphism",
         "neon",
-        "vibrant",
-        "3d-gradients",
-        "theatrical"
+        "green",
+        "sustainable",
+        "pill-shaped"
       ],
-      "description": "Dramatic design system. High-contrast animated interfaces with neon accents, abstract 3D gradients, and fluid animations.",
+      "description": "Big Shaped design system. Stark architectural typography meets organic softness with neon lime accents and floating glassmorphic overlays.",
       "files": {
         "skill": "SKILL.md",
         "preview": "preview.html",
