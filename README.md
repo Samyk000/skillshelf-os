@@ -60,19 +60,19 @@ cp skills/forge-ui/SKILL.md ./SKILL.md
 
 ## 🗂️ Collection
 
-### Developer Tools
-- [**ForgeUI**](skills/forge-ui/) - Developer-first dark app. High-contrast IDE aesthetic with pastel accents, bento grids, and seamless light/dark mode.
-
-### Fintech
+### Finance & Wealth
 - [**Aegis Glow**](skills/aegis-glow/) - Obsidian Glow Fintech UI. Luxurious metallic interfaces with cinematic copper lighting and glassmorphic cards.
+- [**PureWealth**](skills/purewealth/) - Warm Minimalist SaaS. Sophisticated palette of pure white and soft beige with asymmetrical bento grid layouts.
+- [**AuraWealth**](skills/aurawealth/) - Organic FinTech. Structured UI floating above deep, blurred nature motifs with striking lime accents.
 
-### Clean Tech
-- [**Ecovolt**](skills/ecovolt/) - Eco-Brutalist Clean Tech. Stark typography meets organic softness with neon lime accents and pill-shaped containers.
+### Productivity & Admin
+- [**ForgeUI**](skills/forge-ui/) - Developer-first dark app. High-contrast IDE aesthetic with pastel accents, bento grids, and seamless themes.
+- [**FluxBoard**](skills/fluxboard/) - Premium Kanban Design. Neo-Dark Bento style with high contrast, vibrant accent blocks, and ambient productivity glows.
+- [**Quantify**](skills/quantify/) - Data-Dense Analytics UI. High-structure, information-rich interfaces with vibrant lime-green accents.
 
-### AI & ML
+### Future-Forward SaaS
 - [**Nova AI**](skills/nova-ai/) - Radiant Soft-Glass AI. Airy SaaS interfaces with sunburst gradients, floating 3D glassmorphic cards, and warm AI Spark accents.
-
-### Design System
+- [**Ecovolt**](skills/ecovolt/) - Eco-Brutalist Clean Tech. Stark typography meets organic softness with neon lime accents and pill-shaped containers.
 - [**Big Shaped**](skills/big-shaped/) - Big Shaped design system. Stark architectural typography meets organic softness with neon lime accents and floating glassmorphic overlays.
 
 ### More Coming Soon

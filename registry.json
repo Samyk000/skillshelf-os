@@ -4,7 +4,7 @@
     {
       "slug": "forge-ui",
       "title": "ForgeUI",
-      "category": "Developer Tools",
+      "category": "Productivity & Admin",
       "tags": [
         "dark",
         "developer",
@@ -23,7 +23,7 @@
     {
       "slug": "aegis-glow",
       "title": "Aegis Glow",
-      "category": "Fintech",
+      "category": "Finance & Wealth",
       "tags": [
         "dark",
         "fintech",
@@ -42,7 +42,7 @@
     {
       "slug": "ecovolt",
       "title": "Ecovolt",
-      "category": "Clean Tech",
+      "category": "Premium SaaS",
       "tags": [
         "eco",
         "brutalist",
@@ -61,7 +61,7 @@
     {
       "slug": "nova-ai",
       "title": "Nova AI",
-      "category": "AI & ML",
+      "category": "Premium SaaS",
       "tags": [
         "ai",
         "glassmorphism",
@@ -80,7 +80,7 @@
     {
       "slug": "big-shaped",
       "title": "Big Shaped",
-      "category": "Design System",
+      "category": "Premium SaaS",
       "tags": [
         "dark",
         "design system",
@@ -100,7 +100,7 @@
     {
       "slug": "quantify",
       "title": "Quantify",
-      "category": "Analytics",
+      "category": "Productivity & Admin",
       "tags": [
         "light",
         "gray",
@@ -119,7 +119,7 @@
     {
       "slug": "purewealth",
       "title": "PureWealth",
-      "category": "Fintech",
+      "category": "Finance & Wealth",
       "tags": [
         "warm",
         "minimalist",
@@ -137,7 +137,7 @@
     {
       "slug": "aurawealth",
       "title": "AuraWealth",
-      "category": "Fintech",
+      "category": "Finance & Wealth",
       "tags": [
         "organic",
         "fintech",
@@ -155,7 +155,7 @@
     {
       "slug": "fluxboard",
       "title": "FluxBoard",
-      "category": "Productivity",
+      "category": "Productivity & Admin",
       "tags": [
         "dark",
         "kanban",
