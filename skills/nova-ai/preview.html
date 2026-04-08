@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaAI - Intelligent Sales Automation</title>
+
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            'bg-frame': '#FFFFFF',
+                            'bg-frame-dark': '#020617',
+                            'card-light': '#FFFFFF',
+                            'card-dark': '#1E293B',
+                            'text-main': '#0F172A',
+                            'text-dark': '#F8FAFC',
+                            'text-muted': '#64748B',
+                            'text-muted-dark': '#94A3B8',
+                            'border-light': '#F1F5F9',
+                            'border-dark': '#334155',
+                            'btn-dark': '#0F172A',
+                            'btn-dark-hover': '#1E293B',
+                            'accent-purple': '#A855F7',
+                            'accent-pink': '#EC4899',
+                            'accent-orange': '#F97316'
+                        }
+                    },
+                    boxShadow: {
+                        'float': '0 20px 50px -12px rgba(15, 23, 42, 0.1)',
+                        'float-dark': '0 20px 50px -12px rgba(0, 0, 0, 0.6)',
+                        'inner-soft': 'inset 0 2px 4px 0 rgba(255, 255, 255, 0.5)',
+                        'inner-dark': 'inset 0 2px 4px 0 rgba(255, 255, 255, 0.1)',
+                        'glow-accent': '0 0 20px -5px rgba(236, 72, 153, 0.5)',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed-1': 'float 6s ease-in-out 1.5s infinite',
+                        'float-delayed-2': 'float 6s ease-in-out 3s infinite',
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        pulseGlow: {
+                            '0%': { opacity: '0.5', filter: 'blur(10px)', transform: 'scale(1)' },
+                            '100%': { opacity: '1', filter: 'blur(15px)', transform: 'scale(1.1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #FFFFFF;
+        }
+
+        html.dark body {
+            background-color: #020617;
+        }
+
+        *,
+        *::before,
+        *::after {
+            transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* The Sunburst Radiant Background */
+        .radiant-bg {
+            background:
+                radial-gradient(circle at 50% 100%, transparent 0%, var(--gradient-bottom) 100%),
+                repeating-conic-gradient(from 0deg at 50% 110%,
+                    transparent 0deg 4deg,
+                    var(--ray-color) 4deg 8deg,
+                    transparent 8deg 12deg),
+                linear-gradient(180deg, var(--gradient-top) 0%, var(--gradient-bottom) 100%);
+            background-attachment: fixed;
+        }
+
+        html.light .radiant-bg {
+            --gradient-top: #E6F0FF;
+            --gradient-bottom: #FFF1EB;
+            --ray-color: rgba(255, 255, 255, 0.6);
+        }
+
+        html.dark .radiant-bg {
+            --gradient-top: #0F172A;
+            --gradient-bottom: #1E1B4B;
+            --ray-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* AI Spark Gradient Text/Icons */
+        .ai-gradient {
+            background: linear-gradient(135deg, #EC4899, #F97316, #FBBF24);
+        }
+
+        .text-ai-gradient {
+            background: linear-gradient(135deg, #EC4899, #F97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Staggered Delays */
+        .delay-100 {
+            animation-delay: 100ms;
+            opacity: 0;
+        }
+
+        .delay-200 {
+            animation-delay: 200ms;
+            opacity: 0;
+        }
+
+        .delay-300 {
+            animation-delay: 300ms;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body class="font-sans p-2 sm:p-4 selection:bg-brand-accent-pink selection:text-white">
+
+    <div
+        class="w-full min-h-[calc(100vh-2rem)] radiant-bg rounded-[2rem] md:rounded-[3rem] overflow-x-hidden relative flex flex-col shadow-inner-soft dark:shadow-inner-dark border-[6px] md:border-[12px] border-white dark:border-[#020617]">
+
+        <header
+            class="w-full max-w-[1400px] mx-auto px-6 md:px-12 py-6 flex items-center justify-between relative z-50">
+            <div class="flex items-center gap-2 cursor-pointer group">
+                <div class="w-8 h-8 rounded-xl ai-gradient flex items-center justify-center shadow-glow-accent">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                    </svg>
+                </div>
+                <span class="font-bold tracking-tight text-xl text-brand-text-main dark:text-white">NovaAI</span>
+            </div>
+
+            <nav
+                class="hidden lg:flex items-center gap-8 bg-white/60 dark:bg-black/30 backdrop-blur-xl px-8 py-3 rounded-full border border-white/50 dark:border-white/10 shadow-sm">
+                <a href="#product"
+                    class="text-sm font-semibold text-brand-text-main dark:text-brand-text-dark hover:opacity-60 transition-opacity">Product</a>
+                <a href="#features"
+                    class="text-sm font-semibold text-brand-text-main dark:text-brand-text-dark hover:opacity-60 transition-opacity">Features</a>
+                <a href="#pricing"
+                    class="text-sm font-semibold text-brand-text-main dark:text-brand-text-dark hover:opacity-60 transition-opacity">Pricing</a>
+                <a href="#resources"
+                    class="text-sm font-semibold text-brand-text-main dark:text-brand-text-dark hover:opacity-60 transition-opacity">Resources</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" type="button"
+                    class="p-2.5 text-brand-text-muted dark:text-brand-text-muted-dark hover:text-brand-text-main dark:hover:text-white transition-colors focus:outline-none bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-full border border-white/50 dark:border-white/10 shadow-sm">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-4 h-4" fill="none" stroke="currentColor"
+                        stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-4 h-4" fill="none" stroke="currentColor"
+                        stroke-width="2.5" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <a href="#"
+                    class="hidden sm:block text-sm font-semibold text-brand-text-main dark:text-white hover:opacity-60 transition-opacity">Sign
+                    in</a>
+                <button
+                    class="hidden sm:block bg-white dark:bg-brand-card-dark text-brand-text-main dark:text-white border border-brand-border-light dark:border-brand-border-dark px-6 py-2.5 rounded-full text-sm font-bold shadow-sm hover:shadow-md hover:scale-105 transition-all">
+                    Sign up
+                </button>
+                <button
+                    class="lg:hidden p-2 text-brand-text-main dark:text-white bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-full border border-white/50 dark:border-white/10">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="flex-grow flex flex-col items-center justify-start relative z-10 w-full">
+
+            <section class="w-full flex flex-col items-center pt-16 md:pt-24 pb-20 px-6 relative z-10">
+                <div class="text-center max-w-4xl mx-auto mb-12 animate-fade-in-up relative z-40">
+                    <h1
+                        class="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black tracking-tighter leading-[1.05] mb-6 text-balance text-brand-text-main dark:text-white">
+                        AI-Driven sales teams with <br class="hidden md:block">
+                        <span class="text-ai-gradient">human-level precision</span>
+                    </h1>
+                    <p
+                        class="text-lg md:text-xl text-brand-text-muted dark:text-brand-text-muted-dark max-w-2xl mx-auto font-medium leading-relaxed">
+                        Empower your business with AI-driven teams that execute outreach, analyze data, and close deals
+                        with human-level precision, efficiency, and reliability.
+                    </p>
+                </div>
+
+                <div
+                    class="relative w-full max-w-5xl h-[450px] md:h-[550px] flex items-center justify-center animate-fade-in-up delay-100 z-30">
+
+                    <div
+                        class="absolute z-30 w-full max-w-[340px] md:max-w-[400px] bg-brand-card-light dark:bg-brand-card-dark rounded-[1.75rem] md:rounded-[2.5rem] p-6 md:p-8 shadow-float dark:shadow-float-dark border border-brand-border-light dark:border-white/5 animate-float flex flex-col h-[380px]">
+                        <div class="flex items-center justify-between mb-8">
+                            <button class="text-gray-400 hover:text-gray-600"><svg class="w-5 h-5" fill="none"
+                                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12">
+                                    </path>
+                                </svg></button>
+                            <span class="text-base font-bold text-brand-text-main dark:text-white">New sequence</span>
+                            <svg class="w-5 h-5 text-brand-accent-pink" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                            </svg>
+                        </div>
+
+                        <div class="relative w-20 h-20 mx-auto mb-8 mt-2">
+                            <div
+                                class="absolute inset-0 ai-gradient rounded-full blur-[12px] animate-pulse-glow opacity-60">
+                            </div>
+                            <div
+                                class="relative w-full h-full ai-gradient rounded-full shadow-inner-soft flex items-center justify-center text-white">
+                                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <p
+                            class="text-[15px] font-semibold text-brand-text-main dark:text-brand-text-dark mb-4 text-center leading-relaxed">
+                            Generate a personalized outreach sequence for our Enterprise tier.
+                        </p>
+
+                        <div
+                            class="bg-gray-50 dark:bg-[#0F172A] border border-gray-100 dark:border-white/5 rounded-2xl p-4 mb-6 relative">
+                            <div
+                                class="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-brand-accent-pink rounded-full border-4 border-brand-card-light dark:border-brand-card-dark">
+                            </div>
+                            <p
+                                class="text-xs text-brand-text-muted dark:text-brand-text-muted-dark leading-relaxed pl-2">
+                                "Hi [Name], noticed your team at [Company] is scaling rapidly. Our Enterprise
+                                solution..."
+                            </p>
+                        </div>
+
+                        <div class="mt-auto relative w-full pt-2">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-brand-accent-pink via-brand-accent-orange to-yellow-400 rounded-full blur-[3px] opacity-40">
+                            </div>
+                            <div
+                                class="relative bg-white dark:bg-[#1E293B] border border-gray-100 dark:border-white/10 rounded-full p-1.5 flex items-center shadow-sm">
+                                <div
+                                    class="w-8 h-8 rounded-full ai-gradient flex items-center justify-center text-white ml-1 shadow-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                </div>
+                                <input type="text" placeholder="Refine or edit sequence..."
+                                    class="flex-grow bg-transparent text-sm font-semibold px-4 focus:outline-none text-brand-text-main dark:text-white placeholder:text-gray-400">
+                                <button
+                                    class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 mr-1 hover:bg-gray-200 transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="hidden md:flex absolute z-20 top-[15%] left-[5%] lg:left-[12%] bg-brand-card-light dark:bg-brand-card-dark p-3.5 pr-6 rounded-full shadow-float dark:shadow-float-dark border border-brand-border-light dark:border-white/5 -rotate-6 animate-float-delayed-1 items-center gap-4">
+                        <div
+                            class="w-10 h-10 rounded-full bg-orange-50 dark:bg-orange-900/30 text-brand-accent-orange flex items-center justify-center border border-orange-100 dark:border-orange-500/20">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-bold text-brand-text-main dark:text-white leading-none">48%</span>
+                            <span class="text-[10px] text-brand-text-muted font-semibold mt-1">Open rate average</span>
+                        </div>
+                        <button class="ml-2 text-gray-400 hover:text-gray-600"><svg class="w-4 h-4" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <circle cx="12" cy="5" r="2" />
+                                <circle cx="12" cy="12" r="2" />
+                                <circle cx="12" cy="19" r="2" />
+                            </svg></button>
+                    </div>
+
+                    <div
+                        class="hidden md:flex absolute z-20 bottom-[10%] left-[2%] lg:left-[8%] bg-brand-card-light dark:bg-brand-card-dark p-6 rounded-3xl shadow-float dark:shadow-float-dark border border-brand-border-light dark:border-white/5 -rotate-12 animate-float-delayed-2 flex-col w-[240px]">
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-blue-500 flex items-center justify-center mb-4 border border-blue-100 dark:border-blue-500/20">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="flex items-end gap-2 mb-2">
+                            <span class="text-lg font-bold text-brand-text-main dark:text-white">Sales</span>
+                            <span
+                                class="text-[10px] font-bold text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded flex items-center gap-0.5"><svg
+                                    class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="3"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18">
+                                    </path>
+                                </svg> 6.9%</span>
+                        </div>
+                        <p class="text-3xl font-black text-brand-text-main dark:text-white mb-2">$7,854<span
+                                class="text-xl text-gray-400">.21</span></p>
+                        <p class="text-[10px] text-brand-text-muted font-medium">Previous year ($2,134.00)</p>
+                    </div>
+
+                    <div
+                        class="hidden md:flex absolute z-20 top-[10%] right-[5%] lg:right-[8%] bg-brand-card-light dark:bg-brand-card-dark p-6 rounded-3xl shadow-float dark:shadow-float-dark border border-brand-border-light dark:border-white/5 rotate-6 animate-float-delayed-1 flex-col w-[260px]">
+                        <p class="text-sm font-bold text-brand-text-main dark:text-white mb-1">Sales Figures</p>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="w-2 h-2 rounded-full bg-brand-accent-orange"></span>
+                            <p class="text-2xl font-black text-brand-text-main dark:text-white">$4,686<span
+                                    class="text-lg text-gray-400">.82</span></p>
+                        </div>
+                        <p class="text-[10px] text-brand-text-muted font-medium mb-6">Marketing Sales</p>
+
+                        <div class="flex items-end gap-2 h-16 w-full">
+                            <div class="w-full flex flex-col justify-end gap-1 h-full">
+                                <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-sm h-[30%]"></div>
+                                <div class="w-full bg-orange-100 dark:bg-orange-900/30 rounded-sm h-[20%]"></div>
+                            </div>
+                            <div class="w-full flex flex-col justify-end gap-1 h-full">
+                                <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-sm h-[50%]"></div>
+                                <div class="w-full bg-brand-accent-orange rounded-sm h-[30%] shadow-glow-accent"></div>
+                            </div>
+                            <div class="w-full flex flex-col justify-end gap-1 h-full">
+                                <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-sm h-[40%]"></div>
+                                <div class="w-full bg-orange-100 dark:bg-orange-900/30 rounded-sm h-[25%]"></div>
+                            </div>
+                            <div class="w-full flex flex-col justify-end gap-1 h-full">
+                                <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-sm h-[70%]"></div>
+                                <div class="w-full bg-brand-accent-orange rounded-sm h-[40%] shadow-glow-accent"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="hidden md:flex absolute z-20 bottom-[5%] right-[2%] lg:right-[5%] bg-brand-card-light dark:bg-brand-card-dark p-6 rounded-3xl shadow-float dark:shadow-float-dark border border-brand-border-light dark:border-white/5 rotate-12 animate-float flex-col items-center w-[240px]">
+                        <span class="text-xs font-bold text-brand-text-main dark:text-white mb-6 self-start">Average
+                            Total Sales</span>
+
+                        <div class="relative w-28 h-28 flex flex-col items-center justify-center mb-6">
+                            <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="4"
+                                    stroke-dasharray="4 6" class="text-gray-200 dark:text-gray-800"></circle>
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="url(#gradient)" stroke-width="6"
+                                    stroke-dasharray="282.7" stroke-dashoffset="33.9" stroke-linecap="round"></circle>
+                                <defs>
+                                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#A855F7" />
+                                        <stop offset="100%" stop-color="#EC4899" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <span
+                                class="text-2xl font-black text-brand-text-main dark:text-white leading-none">88%</span>
+                            <span class="text-[9px] text-brand-text-muted font-bold mt-1">Target Level: 95</span>
+                            <div
+                                class="absolute -bottom-2 bg-pink-50 dark:bg-pink-900/30 text-brand-accent-pink px-2 py-0.5 rounded-full text-[9px] font-bold border border-pink-100 dark:border-pink-500/20">
+                                + 2.45%
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between w-full pt-4 border-t border-gray-100 dark:border-white/5">
+                            <div class="flex flex-col">
+                                <span class="text-[9px] text-brand-text-muted font-semibold">Average Sales</span>
+                                <span class="text-sm font-bold text-brand-text-main dark:text-white">$4,277.86</span>
+                            </div>
+                            <div class="flex flex-col text-right">
+                                <span class="text-[9px] text-brand-text-muted font-semibold">Average Products</span>
+                                <span class="text-sm font-bold text-brand-text-main dark:text-white">$2,572.75</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div
+                    class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 relative z-40 animate-fade-in-up delay-300 w-full sm:w-auto">
+                    <button
+                        class="w-full sm:w-auto bg-brand-btn-dark dark:bg-white text-white dark:text-brand-btn-dark px-10 py-4 rounded-2xl text-base font-bold shadow-[0_10px_20px_-10px_rgba(15,23,42,0.5)] dark:shadow-[0_10px_20px_-10px_rgba(255,255,255,0.3)] hover:-translate-y-1 hover:shadow-xl transition-all">
+                        Try for free
+                    </button>
+                    <button
+                        class="w-full sm:w-auto bg-white dark:bg-brand-card-dark border border-gray-200 dark:border-white/10 text-brand-text-main dark:text-white px-10 py-4 rounded-2xl text-base font-bold hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-md transition-all">
+                        Request a Demo
+                    </button>
+                </div>
+            </section>
+
+            <section
+                class="w-full py-16 border-y border-gray-100 dark:border-white/5 bg-white/30 dark:bg-black/10 backdrop-blur-sm z-10 relative">
+                <div class="max-w-[1200px] mx-auto px-6 text-center">
+                    <p class="text-sm font-semibold text-brand-text-muted mb-8 tracking-widest uppercase">Trusted by
+                        modern revenue teams</p>
+                    <div
+                        class="flex flex-wrap justify-center gap-10 md:gap-20 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                        <div class="font-bold text-xl flex items-center gap-2">
+                            <div class="w-6 h-6 bg-current rounded-full"></div> Segment
+                        </div>
+                        <div class="font-black text-xl tracking-tighter flex items-center gap-1"><svg class="w-6 h-6"
+                                viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2L2 22h20L12 2z" />
+                            </svg> Outreach</div>
+                        <div class="font-serif font-bold text-xl italic tracking-tight">Gong</div>
+                        <div class="font-bold text-xl flex items-center gap-2 tracking-tighter">
+                            <div class="w-5 h-5 border-4 border-current rounded-sm"></div> Intercom
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features" class="w-full py-24 px-6 max-w-[1200px] mx-auto relative z-10">
+                <div class="text-center mb-16 animate-fade-in-up">
+                    <h2
+                        class="text-4xl md:text-5xl font-black tracking-tight mb-4 text-brand-text-main dark:text-white">
+                        Everything you need to close.</h2>
+                    <p class="text-brand-text-muted text-lg max-w-2xl mx-auto font-medium">A carefully curated suite of
+                        AI tools designed to analyze calls, draft sequences, and predict pipeline revenue automatically.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div
+                        class="md:col-span-2 bg-white dark:bg-brand-card-dark border border-brand-border-light dark:border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-between shadow-sm hover:shadow-float dark:hover:shadow-float-dark transition-all group overflow-hidden relative min-h-[400px]">
+                        <div class="relative z-10 max-w-md">
+                            <div
+                                class="w-14 h-14 bg-pink-50 dark:bg-pink-900/30 text-brand-accent-pink rounded-2xl flex items-center justify-center mb-6 border border-pink-100 dark:border-pink-500/20">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-4 text-brand-text-main dark:text-white">Automated Outreach
+                            </h3>
+                            <p class="text-brand-text-muted font-medium text-lg leading-relaxed">Let our AI draft highly
+                                personalized, context-aware emails based on LinkedIn profiles, news events, and CRM
+                                history.</p>
+                        </div>
+                        <div
+                            class="absolute right-[-10%] bottom-[-20%] w-[60%] h-[120%] pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity duration-700">
+                            <div class="w-full h-full ai-gradient rounded-full blur-[100px]"></div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white dark:bg-brand-card-dark border border-brand-border-light dark:border-white/5 rounded-[2.5rem] p-10 flex flex-col shadow-sm hover:shadow-float dark:hover:shadow-float-dark transition-all min-h-[400px]">
+                        <div
+                            class="w-14 h-14 bg-orange-50 dark:bg-orange-900/30 text-brand-accent-orange rounded-2xl flex items-center justify-center mb-6 border border-orange-100 dark:border-orange-500/20">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-brand-text-main dark:text-white">Sentiment Analysis</h3>
+                        <p class="text-brand-text-muted font-medium flex-grow text-lg">Automatically gauge prospect
+                            interest and buying intent from email replies and call transcripts.</p>
+                    </div>
+
+                    <div
+                        class="bg-white dark:bg-brand-card-dark border border-brand-border-light dark:border-white/5 rounded-[2.5rem] p-10 shadow-sm hover:shadow-float dark:hover:shadow-float-dark transition-all">
+                        <div
+                            class="w-14 h-14 bg-blue-50 dark:bg-blue-900/30 text-blue-500 rounded-2xl flex items-center justify-center mb-6 border border-blue-100 dark:border-blue-500/20">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-brand-text-main dark:text-white">Global Translation</h3>
+                        <p class="text-brand-text-muted font-medium text-lg">Communicate flawlessly with prospects in
+                            over 40 languages in real-time.</p>
+                    </div>
+
+                    <div
+                        class="md:col-span-2 bg-gradient-to-br from-brand-btn-dark to-brand-card-dark dark:bg-gradient-to-br dark:from-black dark:to-[#1A1A2E] text-white rounded-[2.5rem] p-10 shadow-float dark:shadow-float-dark transition-all flex flex-col md:flex-row items-center justify-between gap-10 relative overflow-hidden group">
+                        <div class="relative z-10">
+                            <h3 class="text-3xl font-bold mb-4">Predictive Closing</h3>
+                            <p class="text-white/80 max-w-md font-medium text-lg">Our models analyze historical CRM data
+                                to accurately predict which deals will close this quarter and surface risk factors
+                                instantly.</p>
+                        </div>
+                        <div
+                            class="relative z-10 w-full md:w-1/3 aspect-square bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-6 flex flex-col gap-3 shadow-inner-soft group-hover:scale-105 transition-transform duration-500">
+                            <div class="flex items-end gap-2 h-full w-full pb-2 border-b border-white/20">
+                                <div class="w-full bg-white/20 rounded-t-md h-[40%]"></div>
+                                <div class="w-full bg-white/40 rounded-t-md h-[60%]"></div>
+                                <div class="w-full ai-gradient rounded-t-md h-[90%] shadow-glow-accent"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="pricing" class="w-full py-24 px-6 max-w-[1200px] mx-auto relative z-10">
+                <div class="text-center mb-16 animate-fade-in-up">
+                    <h2
+                        class="text-4xl md:text-5xl font-black tracking-tight mb-4 text-brand-text-main dark:text-white">
+                        Simple, transparent pricing</h2>
+                    <p class="text-brand-text-muted text-lg font-medium">Start for free, scale when you need to.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                    <div
+                        class="bg-white dark:bg-brand-card-dark border border-brand-border-light dark:border-white/5 rounded-[2.5rem] p-10 flex flex-col h-full shadow-sm hover:shadow-float dark:hover:shadow-float-dark transition-all">
+                        <h3 class="text-2xl font-bold mb-2 text-brand-text-main dark:text-white">Basic</h3>
+                        <p class="text-brand-text-muted text-sm font-medium mb-8">Perfect for exploring the platform.
+                        </p>
+                        <div class="mb-8">
+                            <span
+                                class="text-5xl font-black tracking-tighter text-brand-text-main dark:text-white">$0</span>
+                            <span class="text-brand-text-muted font-medium">/mo</span>
+                        </div>
+                        <ul class="flex flex-col gap-4 mb-10 flex-grow">
+                            <li class="flex items-center gap-3 text-sm font-bold text-brand-text-main dark:text-white">
+                                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-width="3"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                </svg> Up to 100 contacts</li>
+                            <li class="flex items-center gap-3 text-sm font-bold text-brand-text-main dark:text-white">
+                                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-width="3"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                </svg> 5 AI drafts / day</li>
+                            <li class="flex items-center gap-3 text-sm font-bold text-brand-text-main dark:text-white">
+                                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-width="3"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                </svg> Community Support</li>
+                        </ul>
+                        <button
+                            class="w-full py-4 rounded-2xl font-bold text-brand-text-main dark:text-white border-2 border-brand-border-light dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">Get
+                            Started Free</button>
+                    </div>
+
+                    <div class="bg-white dark:bg-[#1E293B] rounded-[2.5rem] p-10 flex flex-col h-[105%] shadow-float dark:shadow-float-dark relative relative z-10 border-[4px] border-transparent"
+                        style="background-image: linear-gradient(var(--tw-colors-white), var(--tw-colors-white)), linear-gradient(135deg, #EC4899, #F97316); background-origin: border-box; background-clip: padding-box, border-box;">
+                        <style>
+                            html.dark .border-gradient-dark {
+                                background-image: linear-gradient(#1E293B, #1E293B), linear-gradient(135deg, #EC4899, #F97316);
+                            }
+                        </style>
+                        <script>
+                            // Handle inline dark mode adjustment for the gradient border trick
+                            if (document.documentElement.classList.contains('dark')) {
+                                document.currentScript.parentElement.classList.add('border-gradient-dark');
+                            }
+                            // Observer to swap background-image based on html class
+                            const observer = new MutationObserver((mutations) => {
+                                mutations.forEach((mutation) => {
+                                    if (mutation.attributeName === 'class') {
+                                        const el = mutation.target;
+                                        const card = document.querySelector('.border-gradient-card');
+                                        if (card) {
+                                            if (el.classList.contains('dark')) {
+                                                card.style.backgroundImage = 'linear-gradient(#1E293B, #1E293B), linear-gradient(135deg, #EC4899, #F97316)';
+                                            } else {
+                                                card.style.backgroundImage = 'linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(135deg, #EC4899, #F97316)';
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                            observer.observe(document.documentElement, { attributes: true });
+                        </script>
+
+                        <div class="border-gradient-card absolute inset-0 rounded-[2.5rem] pointer-events-none"
+                            style="border: 4px solid transparent; background-image: linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(135deg, #EC4899, #F97316); background-origin: border-box; background-clip: padding-box, border-box;">
+                        </div>
+
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div
+                                class="absolute -top-14 left-1/2 -translate-x-1/2 ai-gradient text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-glow-accent">
+                                Most Popular</div>
+                            <h3 class="text-2xl font-bold mb-2 text-brand-text-main dark:text-white">Pro</h3>
+                            <p class="text-brand-text-muted text-sm font-medium mb-8">For scaling sales teams.</p>
+                            <div class="mb-8">
+                                <span
+                                    class="text-5xl font-black tracking-tighter text-brand-text-main dark:text-white">$49</span>
+                                <span class="text-brand-text-muted font-medium">/user/mo</span>
+                            </div>
+                            <ul class="flex flex-col gap-4 mb-10 flex-grow">
+                                <li
+                                    class="flex items-center gap-3 text-sm font-bold text-brand-text-main dark:text-white">
+                                    <svg class="w-5 h-5 text-brand-accent-pink" fill="none" stroke="currentColor"
+                                        stroke-width="3" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                    </svg> Unlimited contacts</li>
+                                <li
+                                    class="flex items-center gap-3 text-sm font-bold text-brand-text-main dark:text-white">
+                                    <svg class="w-5 h-5 text-brand-accent-pink" fill="none" stroke="currentColor"
+                                        stroke-width="3" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                    </svg> Unlimited AI drafting</li>
+                                <li
+                                    class="flex items-center gap-3 text-sm font-bold text-brand-text-main dark:text-white">
+                                    <svg class="w-5 h-5 text-brand-accent-pink" fill="none" stroke="currentColor"
+                                        stroke-width="3" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                    </svg> CRM Integration</li>
+                                <li
+                                    class="flex items-center gap-3 text-sm font-bold text-brand-text-main dark:text-white">
+                                    <svg class="w-5 h-5 text-brand-accent-pink" fill="none" stroke="currentColor"
+                                        stroke-width="3" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                    </svg> Priority Support</li>
+                            </ul>
+                            <button
+                                class="w-full py-4 rounded-2xl font-bold text-white ai-gradient shadow-glow-accent hover:scale-[1.02] transition-transform">Start
+                                14-Day Trial</button>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white dark:bg-brand-card-dark border border-brand-border-light dark:border-white/5 rounded-[2.5rem] p-10 flex flex-col h-full shadow-sm hover:shadow-float dark:hover:shadow-float-dark transition-all">
+                        <h3 class="text-2xl font-bold mb-2 text-brand-text-main dark:text-white">Enterprise</h3>
+                        <p class="text-brand-text-muted text-sm font-medium mb-8">Custom AI models and security.</p>
+                        <div class="mb-8">
+                            <span
+                                class="text-5xl font-black tracking-tighter text-brand-text-main dark:text-white">Custom</span>
+                        </div>
+                        <ul class="flex flex-col gap-4 mb-10 flex-grow">
+                            <li class="flex items-center gap-3 text-sm font-bold text-brand-text-main dark:text-white">
+                                <svg class="w-5 h-5 text-brand-text-main dark:text-white" fill="none"
+                                    stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                </svg> Fine-tuned models</li>
+                            <li class="flex items-center gap-3 text-sm font-bold text-brand-text-main dark:text-white">
+                                <svg class="w-5 h-5 text-brand-text-main dark:text-white" fill="none"
+                                    stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                </svg> Dedicated Account Manager</li>
+                            <li class="flex items-center gap-3 text-sm font-bold text-brand-text-main dark:text-white">
+                                <svg class="w-5 h-5 text-brand-text-main dark:text-white" fill="none"
+                                    stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                                </svg> SLA & Compliance</li>
+                        </ul>
+                        <button
+                            class="w-full py-4 rounded-2xl font-bold text-brand-text-main dark:text-white border-2 border-brand-border-light dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">Contact
+                            Sales</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer
+            class="w-full max-w-[1400px] mx-auto border-t border-brand-border-light dark:border-white/5 pt-16 pb-8 px-6 mt-auto relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-6 h-6 rounded-lg ai-gradient flex items-center justify-center">
+                            <svg class="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                            </svg>
+                        </div>
+                        <span
+                            class="font-bold tracking-tight text-lg text-brand-text-main dark:text-white">NovaAI</span>
+                    </div>
+                    <p class="text-brand-text-muted font-medium text-sm leading-relaxed mb-6">
+                        Automating customer interactions with empathetic, precision-driven artificial intelligence.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-6 text-brand-text-main dark:text-white">Product</h4>
+                    <ul class="flex flex-col gap-4 text-sm font-medium text-brand-text-muted">
+                        <li><a href="#"
+                                class="hover:text-brand-text-main dark:hover:text-white transition-colors">Features</a>
+                        </li>
+                        <li><a href="#"
+                                class="hover:text-brand-text-main dark:hover:text-white transition-colors">Integrations</a>
+                        </li>
+                        <li><a href="#"
+                                class="hover:text-brand-text-main dark:hover:text-white transition-colors">Pricing</a>
+                        </li>
+                        <li><a href="#"
+                                class="hover:text-brand-text-main dark:hover:text-white transition-colors">Changelog</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-brand-text-main dark:text-white">Resources</h4>
+                    <ul class="flex flex-col gap-4 text-sm font-medium text-brand-text-muted">
+                        <li><a href="#"
+                                class="hover:text-brand-text-main dark:hover:text-white transition-colors">Documentation</a>
+                        </li>
+                        <li><a href="#" class="hover:text-brand-text-main dark:hover:text-white transition-colors">Help
+                                Center</a></li>
+                        <li><a href="#"
+                                class="hover:text-brand-text-main dark:hover:text-white transition-colors">Community</a>
+                        </li>
+                        <li><a href="#"
+                                class="hover:text-brand-text-main dark:hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-brand-text-main dark:text-white">Company</h4>
+                    <ul class="flex flex-col gap-4 text-sm font-medium text-brand-text-muted">
+                        <li><a href="#" class="hover:text-brand-text-main dark:hover:text-white transition-colors">About
+                                Us</a></li>
+                        <li><a href="#"
+                                class="hover:text-brand-text-main dark:hover:text-white transition-colors">Careers</a>
+                        </li>
+                        <li><a href="#"
+                                class="hover:text-brand-text-main dark:hover:text-white transition-colors">Legal</a>
+                        </li>
+                        <li><a href="#"
+                                class="hover:text-brand-text-main dark:hover:text-white transition-colors">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-brand-border-light dark:border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-semibold text-brand-text-muted">
+                <p>&copy; 2026 NovaAI Inc. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-brand-text-main dark:hover:text-white transition-colors">Privacy
+                        Policy</a>
+                    <a href="#" class="hover:text-brand-text-main dark:hover:text-white transition-colors">Terms of
+                        Service</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        var cardGradient = document.querySelector('.border-gradient-card');
+
+        // Check initial state
+        if (document.documentElement.classList.contains('dark')) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        var themeToggleBtn = document.getElementById('theme-toggle');
+
+        themeToggleBtn.addEventListener('click', function () {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                if (cardGradient) cardGradient.style.backgroundImage = 'linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(135deg, #EC4899, #F97316)';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                if (cardGradient) cardGradient.style.backgroundImage = 'linear-gradient(#1E293B, #1E293B), linear-gradient(135deg, #EC4899, #F97316)';
+            }
+        });
+    </script>
+</body>
+
+</html>

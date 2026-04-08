@@ -12,6 +12,42 @@
         "preview": "preview.html",
         "cover": "cover.png"
       }
+    },
+    {
+      "slug": "aegis-glow",
+      "title": "Aegis Glow",
+      "category": "Fintech",
+      "tags": ["dark", "fintech", "glassmorphism", "copper", "luxury", "cinematic"],
+      "description": "Obsidian Glow Fintech UI. Luxurious metallic financial interfaces with cinematic copper lighting, glassmorphic cards, and dual-theme parity.",
+      "files": {
+        "skill": "SKILL.md",
+        "preview": "preview.html",
+        "cover": "cover.png"
+      }
+    },
+    {
+      "slug": "ecovolt",
+      "title": "Ecovolt",
+      "category": "Clean Tech",
+      "tags": ["eco", "brutalist", "neon", "green", "sustainable", "pill-shaped"],
+      "description": "Eco-Brutalist Clean Tech design. Stark architectural typography meets organic softness with neon lime accents and floating glassmorphic overlays.",
+      "files": {
+        "skill": "SKILL.md",
+        "preview": "preview.html",
+        "cover": "cover.png"
+      }
+    },
+    {
+      "slug": "nova-ai",
+      "title": "Nova AI",
+      "category": "AI & ML",
+      "tags": ["ai", "glassmorphism", "radiant", "sunburst", "warm", "saas"],
+      "description": "Radiant Soft-Glass AI design. Airy SaaS interfaces with sunburst gradients, floating 3D glassmorphic cards, and warm AI Spark accents.",
+      "files": {
+        "skill": "SKILL.md",
+        "preview": "preview.html",
+        "cover": "cover.png"
+      }
     }
   ]
 }

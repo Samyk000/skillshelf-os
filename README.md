@@ -2,7 +2,7 @@
 
 The largest open-source registry of AI-ready design systems. Drop a `SKILL.md` into your project and give your AI coding agent pixel-perfect design DNA.
 
-[![Skills](https://img.shields.io/badge/skills-1-blue)](skills/)
+[![Skills](https://img.shields.io/badge/skills-4-blue)](skills/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
@@ -62,6 +62,15 @@ cp skills/forge-ui/SKILL.md ./SKILL.md
 
 ### Developer Tools
 - [**ForgeUI**](skills/forge-ui/) - Developer-first dark app. High-contrast IDE aesthetic with pastel accents, bento grids, and seamless light/dark mode.
+
+### Fintech
+- [**Aegis Glow**](skills/aegis-glow/) - Obsidian Glow Fintech UI. Luxurious metallic interfaces with cinematic copper lighting and glassmorphic cards.
+
+### Clean Tech
+- [**Ecovolt**](skills/ecovolt/) - Eco-Brutalist Clean Tech. Stark typography meets organic softness with neon lime accents and pill-shaped containers.
+
+### AI & ML
+- [**Nova AI**](skills/nova-ai/) - Radiant Soft-Glass AI. Airy SaaS interfaces with sunburst gradients, floating 3D glassmorphic cards, and warm AI Spark accents.
 
 ### More Coming Soon
 We're actively adding new design systems. [Request one](https://github.com/Samyk000/skillshelf-OpenDesign/issues/new?template=request-skill.yml) or [contribute your own](CONTRIBUTING.md).
