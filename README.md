@@ -1,82 +1,87 @@
 # 🎨 Skillshelf Open Design
 
-The definitive open-source registry of AI-ready design systems. Give your AI coding agent pixel-perfect design DNA with a single file drop.
+The largest open-source registry of AI-ready design systems. Drop a `SKILL.md` into your project and give your AI coding agent pixel-perfect design DNA.
 
-<div align="center">
-
-[![License](https://img.shields.io/github/license/Samyk000/skillshelf-OpenDesign?color=blue)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-1-green)](skills/)
+[![Skills](https://img.shields.io/badge/skills-1-blue)](skills/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Star History](https://img.shields.io/github/stars/Samyk000/skillshelf-OpenDesign?style=social)](https://github.com/Samyk000/skillshelf-OpenDesign)
 
-</div>
+## ⚡ Quick Start
+Copy a `SKILL.md` into your project, tell your AI agent "follow the design system in SKILL.md" and get pixel-perfect UI that actually matches.
 
-## ⚡ Why This Exists
+## 📖 What is SKILL.md?
+`SKILL.md` is a plain-text design system document optimized for AI coding agents. It's the missing link between generic AI output and professional, consistent UI.
 
-AI coding agents (Cursor, Claude Code, Copilot) are brilliant at logic but terrible at aesthetics. They generate generic, inconsistent UIs. **Skillshelf fixes this.**
+It's just a markdown file. No Figma exports, no JSON schemas, no special tooling. Drop it into your project root and any AI coding agent (Cursor, Claude Code, Copilot) instantly understands how your UI should look and behave.
 
-Each skill is a handcrafted, LLM-optimized design system that teaches your AI exactly how to build beautiful, consistent interfaces. No Figma exports. No JSON schemas. Just markdown.
+| File | Who reads it | What it defines |
+|------|--------------|-----------------|
+| `AGENTS.md` | Coding agents | How to build the project |
+| `SKILL.md` | Design agents | How the project should look and feel |
 
-## 🚀 Quick Start
+This repo provides ready-to-use `SKILL.md` files extracted from real websites and handcrafted for maximum AI comprehension.
 
-1.  **Browse** the [skills directory](skills/) or view the [full list below](#-browse-skills).
-2.  **Copy** the `SKILL.md` file into your project root.
-3.  **Prompt** your AI: *"Follow the design system in SKILL.md."*
-4.  **Watch** it generate pixel-perfect UI.
+## 📦 What's Inside Each SKILL.md
+Every file follows a strict, LLM-optimized structure:
 
-### Example Usage
+| # | Section | What it captures |
+|---|---------|------------------|
+| 1 | Mission & Brand | Design philosophy, mood, target audience |
+| 2 | Style Foundations | Typography, colors, spacing, borders, shadows |
+| 3 | Component Families | Buttons, cards, inputs, navigation with states |
+| 4 | Accessibility | WCAG compliance, contrast ratios, theme support |
+| 5 | Do's & Don'ts | Design guardrails and anti-patterns |
+| 6 | Expected Behavior | Interactions, animations, hover states |
+| 7 | Quality Gates | Validation checklist for AI output |
+| 8 | Agent Prompt Guide | Ready-to-use prompts for generation |
+
+Each skill includes:
+
+| File | Purpose |
+|------|---------|
+| `SKILL.md` | The design system (what agents read) |
+| `preview.html` | Visual catalog showing colors, type scale, components |
+| `cover.png` | Thumbnail for quick identification |
+
+## 🚀 How to Use
+1. Copy a skill's `SKILL.md` into your project root
+2. Tell your AI agent to use it
 
 ```bash
-# Copy the ForgeUI skill to your project
+# Example: Copy ForgeUI to your project
 cp skills/forge-ui/SKILL.md ./SKILL.md
 
-# Then ask Cursor/Claude:
-# "Build a landing page following the SKILL.md design system."
+# Then prompt your AI:
+# "Build a landing page following the design system in SKILL.md"
 ```
 
-## ✨ Featured Skills
+## 📥 Request a Skill
+[Open a GitHub issue with this template](https://github.com/Samyk000/skillshelf-OpenDesign/issues/new?template=request-skill.yml) to request a `SKILL.md` generation for a website.
 
-| Skill | Category | Preview |
-| :--- | :--- | :--- |
-| **[ForgeUI](skills/forge-ui/)** | Developer Tools | Dark IDE aesthetic with pastel accents |
-| *[Add Your Skill Here](CONTRIBUTING.md)* | *Community* | *Submit a PR!* |
+## 🗂️ Collection
 
-## 📚 Browse All Skills
+### Developer Tools
+- [**ForgeUI**](skills/forge-ui/) - Developer-first dark app. High-contrast IDE aesthetic with pastel accents, bento grids, and seamless light/dark mode.
 
-We currently have **1** design system in the registry.
-
-| Skill | Category | Description |
-| :--- | :--- | :--- |
-| [**ForgeUI**](skills/forge-ui/) | Developer Tools | High-contrast dark mode, bento grids, monospace accents. |
-
-> 💡 **Missing a design system?** [Request it here](https://github.com/Samyk000/skillshelf-OpenDesign/issues/new?template=request-skill.yml) or [contribute it yourself](CONTRIBUTING.md).
-
-## 🛠️ How It Works
-
-Each skill consists of three files:
-1.  **`SKILL.md`**: The brain. Contains tokens, component rules, and anti-patterns optimized for LLM consumption.
-2.  **`preview.html`**: The eyes. An interactive style guide showing colors, typography, and components.
-3.  **`cover.png`**: The face. A visual thumbnail for quick identification.
+### More Coming Soon
+We're actively adding new design systems. [Request one](https://github.com/Samyk000/skillshelf-OpenDesign/issues/new?template=request-skill.yml) or [contribute your own](CONTRIBUTING.md).
 
 ## 🤝 Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-We welcome contributions! Whether you're fixing a typo, improving a color token, or adding a new design system, your help makes this registry better for everyone.
+- **Add new skills**: Follow the template in `templates/SKILL.md`
+- **Improve existing files**: Fix wrong colors, missing tokens, weak descriptions
+- **Report issues**: Let us know if something looks off
 
--   **Add a Skill**: Follow our [Contributing Guide](CONTRIBUTING.md).
--   **Improve a Skill**: Found an error? Open a [PR](pulls) or [Issue](issues).
--   **Request a Skill**: Use the [Request Template](https://github.com/Samyk000/skillshelf-OpenDesign/issues/new?template=request-skill.yml).
+Before opening a PR, please [open an issue](https://github.com/Samyk000/skillshelf-OpenDesign/issues) first to discuss your idea and get feedback from maintainers.
 
 ## 🌐 Hosted Version
-
 Want a visual browser, likes, saves, and premium skills? Try the full **Skillshelf** app at [skillshelf-liart.vercel.app](https://skillshelf-liart.vercel.app).
 
 ## 📜 License
+MIT License - see [LICENSE](LICENSE)
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgements
-
-Inspired by the need for consistent design in AI-generated code. Built with love by the Skillshelf community.
+This repository is a curated collection of design system documents. All `SKILL.md` files are provided "as is" without warranty. The extracted design tokens represent publicly visible CSS values. We do not claim ownership of any site's visual identity. These documents exist to help AI agents generate consistent UI.
 
 ---
 
