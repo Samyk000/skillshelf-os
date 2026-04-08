@@ -81,3 +81,5 @@ When generating design-system guidance, use this structure:
 - You "must" use negative tracking on all headers above `24px` to maintain the dense editorial look.
 - You "should" wrap UI mockups inside a solid accent-colored container with `rounded-[2rem]`.
 - Do not use standard horizontal `<hr>` rules; use large typographic slashes (`/`) to divide content horizontally.
+
+<!-- SkillShelf_END -->

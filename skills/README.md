@@ -9,7 +9,7 @@ Browse our collection of AI-ready design systems. Each folder contains a complet
 | [**ForgeUI**](./forge-ui/) | Developer Tools | High-contrast dark mode, bento grids, monospace accents. |
 | [**Synthetix**](./synthetix/) | Productivity | Editorial Brutalism with tight typography and bento layouts. |
 | [**VoxAI**](./voxai/) | AI & SaaS | Ethereal interfaces with ambient glow and glassmorphism. |
-| [**Epoch**](./epoch/) | SaaS | Neo-Brutalism with neon accents and high contrast. |
+| [**Epoch**](./epoch/) | SaaS | Editorial SaaS Design with typography-driven layout. |
 | [**Aegis Glow**](./aegis-glow/) | Fintech | Luxurious metallic interfaces with cinematic copper lighting. |
 | [**Ecovolt**](./ecovolt/) | Clean Tech | Stark typography meets organic softness with neon accents. |
 | [**Nova AI**](./nova-ai/) | AI & ML | Airy SaaS interfaces with sunburst gradients and glassmorphic cards. |

@@ -70,3 +70,5 @@ authoritative, visionary, data-driven, precise
 - No rule should depend on ambiguous adjectives alone; anchor each rule to a token, threshold, or example.
 - Verify horizontal scrolling: the design must *never* cause a horizontal scrollbar.
 - Verify Theme Toggle: The user must be able to switch between dark and light mode without any jagged background rendering or invisible text.
+
+<!-- SkillShelf_END -->

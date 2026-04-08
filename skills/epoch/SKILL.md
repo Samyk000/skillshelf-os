@@ -55,7 +55,7 @@ refined, confident, professional, understated
 3. Specify typography rules, emphasizing when to use Serif vs. Sans-Serif.
 4. Detail the construction of complex UI mockups using raw CSS/HTML rather than static images.
 5. Include layout constraints, specifically the extensive use of 1px dividing lines.
-6. Add anti-patterns (e.g., overuse of color, heavy shadows, missing borders).
+6. Add anti-patterns (e.g., using gradients or multiple colors).
 7. End with a QA checklist (e.g., test theme toggle, verify scrollbar styling, check typography mapping).
 
 ## Required Output Structure
@@ -77,3 +77,5 @@ When generating design-system guidance, use this structure:
 - Every color class applied in HTML must map back to a CSS variable to guarantee the theme toggle works flawlessly.
 - Serif typography must only be used for major headings or prominent stat numbers; never for body copy or UI labels.
 - Sibling grid items (like the bento features or stats) must be visually separated by 1px borders.
+
+<!-- SkillShelf_END -->

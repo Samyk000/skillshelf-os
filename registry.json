@@ -194,13 +194,13 @@
       "title": "Epoch",
       "category": "Premium SaaS",
       "tags": [
-        "brutalist",
-        "neon",
+        "typography",
         "dark",
-        "high-contrast",
-        "saas"
+        "editorial",
+        "saas",
+        "Playfair Display"
       ],
-      "description": "Neon Brutalist SaaS Design. High-contrast, vibrant, and energetic design with massive typography and neon accents.",
+      "description": "Typography-driven Editorial SaaS Design. High-contrast interfaces with strict structural lines and refined editorial layouts.",
       "files": {
         "skill": "SKILL.md",
         "preview": "preview.html",
