@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Design System Guide</title>
+
+    <!-- Prevent Flash of Incorrect Theme (FOIT) -->
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        surface: '#09090B',
+                        surfaceLight: '#FAFAFA',
+                        surfaceCardDark: '#13111C',
+                        surfaceCardLight: '#F4F4F5',
+                        primary: '#D6F379',
+                        accentBlue: '#CBE6F6',
+                        textMain: '#FAFAFA',
+                        textLight: '#09090B',
+                        textMuted: '#A1A1AA',
+                        textMutedLight: '#71717A',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pop-in': 'popIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'float-fast': 'float 4s ease-in-out 1.5s infinite',
+                        'spin-smooth': 'spin 6s linear infinite',
+                        'pulse-glow': 'pulseGlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: 0, transform: 'translateY(40px)', filter: 'blur(8px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' },
+                        },
+                        popIn: {
+                            '0%': { opacity: 0, transform: 'scale(0.9) translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'scale(1) translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0.5 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Premium Scroll Reveal Utilities */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            filter: blur(8px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* Subtle glow for the dark card */
+        .dark .glow-card {
+            box-shadow: 0 0 100px -20px rgba(139, 92, 246, 0.15);
+        }
+
+        .glow-card {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Abstract Gradients */
+        .grad-dark {
+            background: linear-gradient(135deg, #2A2A35 0%, #111116 100%);
+        }
+
+        .grad-sunset {
+            background: linear-gradient(135deg, #FF3B7C 0%, #FF9A44 100%);
+        }
+
+        .grad-gray {
+            background: linear-gradient(135deg, #4B4B57 0%, #2A2A35 100%);
+        }
+
+        .grad-yellow {
+            background: linear-gradient(135deg, #FFD000 0%, #FF7B00 100%);
+        }
+
+        .grad-peach {
+            background: linear-gradient(180deg, #FF6A88 0%, #FFB199 100%);
+        }
+
+        .grad-pink {
+            background: linear-gradient(180deg, #FF0844 0%, #FFB199 100%);
+        }
+
+        .grad-blue {
+            background: linear-gradient(135deg, #89F7FE 0%, #66A6FF 100%);
+        }
+
+        /* Hover utilities */
+        .hover-lift {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+
+<body
+    class="relative min-h-screen pb-12 bg-surfaceLight text-textLight dark:bg-surface dark:text-textMain overflow-x-hidden">
+
+    <!-- Top Navigation Pill (Perfectly Centered) -->
+    <div class="fixed top-6 left-0 right-0 z-50 flex justify-center w-full px-4 pointer-events-none">
+        <nav class="pointer-events-auto bg-white/80 dark:bg-surface/80 backdrop-blur-xl border border-black/10 dark:border-white/10 text-textLight dark:text-textMain rounded-full p-1.5 flex items-center shadow-2xl transition-all duration-500 animate-fade-in-up"
+            style="animation-delay: 0.1s;">
+
+            <!-- Brand -->
+            <span
+                class="bg-cyan-400 text-surface px-4 py-2 rounded-full text-xs font-bold tracking-tight shadow-sm mr-2 md:mr-6">
+                thedesignsystem.guide
+            </span>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-1 md:gap-2 pr-1">
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle"
+                    class="p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-textLight dark:text-textMain group">
+                    <!-- Sun Icon -->
+                    <svg id="theme-toggle-light-icon"
+                        class="w-4 h-4 hidden dark:block group-hover:rotate-45 transition-transform duration-300"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                    <!-- Moon Icon -->
+                    <svg id="theme-toggle-dark-icon"
+                        class="w-4 h-4 block dark:hidden group-hover:-rotate-12 transition-transform duration-300"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                        </path>
+                    </svg>
+                </button>
+
+                <button
+                    class="p-2.5 text-textMutedLight dark:text-white hover:text-cyan-500 dark:hover:text-cyan-400 hover:scale-110 transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+                <button
+                    class="bg-surface text-white dark:bg-white dark:text-surface hover:scale-105 active:scale-95 px-6 py-2 rounded-full text-sm font-bold transition-all shadow-md ml-1">
+                    Menu
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <main class="max-w-[1200px] mx-auto px-6 pt-32">
+
+        <!-- Hero Section -->
+        <section class="text-center pt-24 pb-16 relative">
+            <!-- Decorative Crosses (Smooth Rotate + Float) -->
+            <div class="absolute top-10 left-[10%] md:left-[20%] animate-float">
+                <div class="text-orange-500 opacity-80 animate-spin-smooth">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="absolute top-0 right-[10%] md:right-[20%] animate-float-delayed">
+                <div class="text-pink-400 opacity-80 animate-spin-smooth" style="animation-direction: reverse;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z" />
+                    </svg>
+                </div>
+            </div>
+
+            <h1
+                class="text-6xl md:text-[6.5rem] font-black tracking-tight leading-[1.1] flex flex-col items-center gap-3 md:gap-5">
+                <span
+                    class="bg-accentBlue text-surface px-8 md:px-12 py-1 md:py-2 rounded-full inline-block shadow-lg transform -rotate-2 hover:rotate-0 transition-transform duration-500 cursor-default animate-pop-in"
+                    style="animation-delay: 0.1s;">Build better</span>
+                <span
+                    class="bg-accentBlue text-surface px-8 md:px-12 py-1 md:py-2 rounded-full inline-block shadow-lg transform rotate-2 hover:rotate-0 transition-transform duration-500 cursor-default animate-pop-in"
+                    style="animation-delay: 0.3s;">design systems</span>
+            </h1>
+            <p class="mt-10 text-textMutedLight dark:text-textMuted text-lg md:text-2xl font-medium animate-fade-in-up"
+                style="animation-delay: 0.6s;">All the essential resources for setting up the design system.</p>
+        </section>
+
+        <!-- Abstract Shapes Row -->
+        <section class="flex justify-center items-end gap-3 md:gap-5 mb-32 h-40 animate-fade-in-up"
+            style="animation-delay: 0.8s;">
+            <div
+                class="w-12 h-12 md:w-16 md:h-16 rounded-[1.25rem] grad-dark shadow-xl border border-white/10 animate-float hidden md:block">
+            </div>
+            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full grad-sunset shadow-xl animate-float-delayed"></div>
+            <div
+                class="w-24 h-10 md:w-32 md:h-14 rounded-full grad-gray shadow-xl border border-white/10 flex items-center justify-center animate-float-fast">
+                <div class="w-12 h-1 md:w-16 md:h-1 bg-white/30 rounded-full"></div>
+            </div>
+            <div class="w-16 h-12 md:w-24 md:h-16 rounded-[1.25rem] grad-yellow shadow-xl animate-float"></div>
+            <div
+                class="w-12 h-20 md:w-16 md:h-28 rounded-t-full rounded-b-xl grad-peach shadow-xl animate-float-delayed">
+            </div>
+            <div
+                class="w-20 h-32 md:w-24 md:h-40 rounded-t-full rounded-b-xl grad-pink shadow-xl relative overflow-hidden animate-float-fast">
+                <div class="absolute -top-10 -right-10 w-20 h-20 bg-white/30 blur-xl rounded-full animate-pulse-glow">
+                </div>
+            </div>
+            <div class="w-12 h-12 md:w-16 md:h-16 rounded-[1.25rem] grad-blue shadow-xl animate-float hidden md:block">
+            </div>
+        </section>
+
+        <!-- Logos Section -->
+        <section
+            class="reveal flex flex-wrap justify-center items-center gap-8 md:gap-20 mb-32 text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-200 transition-all duration-500">
+            <div
+                class="text-xl font-bold flex items-center gap-2 hover:text-black dark:hover:text-white transition-colors cursor-pointer">
+                <div
+                    class="w-6 h-6 bg-current rounded-sm flex items-center justify-center text-surfaceLight dark:text-surface text-xs font-black">
+                    M</div> miro
+            </div>
+            <div class="text-xl font-bold flex items-center gap-2 hover:text-red-500 transition-colors cursor-pointer">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.5 3L23 21H18L14.5 13L11 21H6L14.5 3ZM2 21L9.5 3L11.5 7L5.5 21H2Z" />
+                </svg> Adobe</div>
+            <div
+                class="text-xl font-bold flex items-center gap-2 tracking-widest hover:text-black dark:hover:text-white transition-colors cursor-pointer">
+                <div class="flex flex-col gap-1">
+                    <div class="w-4 h-0.5 bg-current"></div>
+                    <div class="w-4 h-0.5 bg-current"></div>
+                    <div class="w-4 h-0.5 bg-current"></div>
+                </div> ERICSSON
+            </div>
+            <div class="text-xl font-bold flex items-center gap-1 hover:text-blue-500 transition-colors cursor-pointer">
+                Linked<span
+                    class="bg-current text-surfaceLight dark:text-surface px-1 py-0.5 rounded-sm text-sm">in</span>
+            </div>
+            <div
+                class="text-xl font-bold flex items-center gap-1 hover:text-orange-500 transition-colors cursor-pointer">
+                <span class="text-current"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5" />
+                        <circle cx="19" cy="5" r="3" />
+                        <circle cx="5" cy="5" r="3" />
+                        <circle cx="19" cy="19" r="3" />
+                    </svg></span> HubSpot</div>
+            <div class="text-xl font-black tracking-tighter hover:text-blue-600 transition-colors cursor-pointer">
+                DECATHLON</div>
+        </section>
+
+        <!-- Newsletter Card -->
+        <section
+            class="reveal bg-white dark:bg-surfaceCardDark rounded-[2.5rem] p-8 md:p-16 text-center glow-card mb-32 border border-black/5 dark:border-white/5 transition-colors duration-500 relative overflow-hidden">
+            <!-- Background Decoration -->
+            <div class="absolute -top-32 -left-32 w-64 h-64 bg-primary/10 blur-[100px] rounded-full"></div>
+            <div class="absolute -bottom-32 -right-32 w-64 h-64 bg-accentBlue/10 blur-[100px] rounded-full"></div>
+
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 relative z-10 text-textLight dark:text-textMain">The Design
+                System Guide Newsletter</h2>
+            <p class="text-textMutedLight dark:text-textMuted mb-12 max-w-lg mx-auto text-lg relative z-10">Get weekly
+                insights, tools, and templates about AI, product, design systems. No ads, no fluff.</p>
+
+            <div
+                class="bg-surfaceLight dark:bg-white text-textLight dark:text-surface rounded-[2rem] p-8 md:p-10 max-w-xl mx-auto shadow-2xl relative z-10 border border-black/5 hover-lift">
+                <div
+                    class="w-14 h-14 bg-surface text-white rounded-xl flex items-center justify-center font-black mx-auto mb-6 text-2xl tracking-tighter shadow-lg transform -rotate-3 hover:rotate-0 transition-transform">
+                    DSG</div>
+                <h3
+                    class="text-2xl md:text-3xl font-bold mb-3 underline decoration-4 decoration-gray-200 dark:decoration-gray-300 underline-offset-4">
+                    The Design System Guide</h3>
+                <p class="text-sm md:text-base text-gray-600 dark:text-gray-600 mb-2 font-medium">Get weekly insights,
+                    tools, and templates to help you build and scale design systems.</p>
+                <p class="text-xs text-gray-400 mb-8 font-semibold uppercase tracking-wide">By Romina Kavcic • Over
+                    16,000 subscribers</p>
+
+                <form class="flex flex-col md:flex-row gap-3 max-w-md mx-auto mb-6 group">
+                    <input type="email" placeholder="Type your email..."
+                        class="flex-1 bg-white dark:bg-gray-50 border border-gray-200 dark:border-gray-200 rounded-xl px-5 py-4 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all text-black">
+                    <button type="button"
+                        class="bg-[#7B8BFF] hover:bg-[#6A7AEE] text-white font-bold rounded-xl px-8 py-4 transition-all transform active:scale-95 shadow-lg shadow-blue-500/30">Subscribe</button>
+                </form>
+                <p class="text-[10px] text-gray-400">By subscribing you agree to <a href="#"
+                        class="underline hover:text-gray-600 transition-colors">Substack's Terms of Use</a>, <a href="#"
+                        class="underline hover:text-gray-600 transition-colors">our Privacy Policy</a>.</p>
+                <div
+                    class="absolute bottom-4 right-6 text-gray-300 dark:text-gray-400 font-bold tracking-tight text-xs">
+                    ≡ substack</div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section class="mb-32">
+            <h3
+                class="reveal text-center text-sm font-bold tracking-[0.2em] text-textMutedLight dark:text-textMuted uppercase mb-12">
+                My Courses</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+
+                <!-- Main Featured Course -->
+                <div
+                    class="reveal md:col-span-2 bg-primary text-surface rounded-[2.5rem] p-10 md:p-20 text-center flex flex-col items-center justify-center relative overflow-hidden group hover-lift">
+                    <!-- Deco Circles -->
+                    <div
+                        class="absolute -top-20 -right-20 w-64 h-64 bg-white/20 blur-3xl rounded-full group-hover:scale-110 transition-transform duration-700">
+                    </div>
+
+                    <div
+                        class="bg-surface text-white text-xs font-bold px-5 py-2 rounded-full mb-8 tracking-widest shadow-md transform -rotate-1 group-hover:rotate-0 transition-transform">
+                        WAITLIST OPENED</div>
+                    <h2 class="text-4xl md:text-6xl font-black mb-6 tracking-tight">Agentic Design Systems</h2>
+                    <p class="text-surface/80 max-w-2xl text-lg md:text-xl mb-10 font-medium">From auditing components
+                        to shipping working tools. Build and automate your design system with AI. No coding experience
+                        required.</p>
+                    <button
+                        class="bg-white/50 hover:bg-white text-surface px-10 py-4 rounded-full font-bold shadow-lg backdrop-blur-sm transition-all transform hover:scale-105 active:scale-95 text-lg">Learn
+                        more</button>
+                </div>
+
+                <!-- Secondary Course 1 -->
+                <div class="reveal bg-white dark:bg-surfaceCardLight text-textLight dark:text-surface rounded-[2.5rem] p-10 flex flex-col items-center text-center group border border-black/5 dark:border-white/50 hover-lift shadow-sm md:shadow-xl dark:shadow-none"
+                    style="transition-delay: 0.1s;">
+                    <div
+                        class="bg-primary text-surface text-[10px] font-black px-4 py-1.5 rounded-full mb-10 uppercase tracking-widest transform -rotate-3 shadow-sm">
+                        Published • Published • Published
+                    </div>
+                    <div class="flex gap-2 mb-10 group-hover:scale-110 transition-transform duration-500">
+                        <div
+                            class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 shadow-md">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM11 19.93C7.05 19.43 4 16.05 4 12C4 7.95 7.05 4.57 11 4.07V19.93ZM13 4.07C16.95 4.57 20 7.95 20 12C20 16.05 16.95 19.43 13 19.93V4.07Z" />
+                            </svg></div>
+                        <div
+                            class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 shadow-md transform -translate-y-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM11 7H13V13H11V7ZM11 15H13V17H11V15Z" />
+                            </svg></div>
+                        <div
+                            class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 shadow-md">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" />
+                            </svg></div>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4 tracking-tight">Design Tokens Mastery</h3>
+                    <p class="text-gray-600 dark:text-gray-600 mb-10 flex-1 text-lg">Learn to structure, manage, and
+                        scale design tokens.</p>
+                    <div class="flex justify-between w-full border-t border-gray-200 pt-8 mb-10 opacity-60">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 shadow-inner"></div>
+                        <div class="w-8 h-8 rounded-full bg-gray-400 shadow-inner"></div>
+                        <div class="w-8 h-8 rounded-full bg-gray-500 shadow-inner"></div>
+                        <div class="w-8 h-8 rounded-full bg-gray-800 shadow-inner"></div>
+                    </div>
+                    <button
+                        class="bg-gray-100 dark:bg-gray-200/80 hover:bg-gray-200 dark:hover:bg-gray-300 text-surface px-10 py-4 rounded-full font-bold shadow-inner transition-colors text-lg">Learn
+                        more</button>
+                </div>
+
+                <!-- Secondary Course 2 -->
+                <div class="reveal bg-white dark:bg-surfaceCardLight text-textLight dark:text-surface rounded-[2.5rem] p-10 flex flex-col items-center text-center group border border-black/5 dark:border-white/50 hover-lift shadow-sm md:shadow-xl dark:shadow-none"
+                    style="transition-delay: 0.2s;">
+                    <div
+                        class="bg-white shadow-2xl rounded-2xl p-5 w-48 h-56 mb-10 flex flex-col justify-center items-center transform group-hover:-translate-y-4 group-hover:rotate-2 transition-transform duration-500 border border-gray-100">
+                        <div class="text-[11px] font-bold text-gray-500 mb-3 uppercase text-center leading-tight">The
+                            Ultimate Airtable Design System Inventory and Automation</div>
+                        <div class="bg-primary text-surface text-[9px] font-bold px-3 py-1 rounded-full mb-3 shadow-sm">
+                            Step-by-step guide</div>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4 tracking-tight">The Ultimate Airtable DS Inventory Guide</h3>
+                    <p class="text-gray-600 dark:text-gray-600 mb-10 flex-1 text-lg">Create an overview of your
+                        components and design tokens with Airtable. It's the easiest way to organize all your design
+                        decisions.</p>
+                    <button
+                        class="bg-gray-100 dark:bg-gray-200/80 hover:bg-gray-200 dark:hover:bg-gray-300 text-surface px-10 py-4 rounded-full font-bold shadow-inner transition-colors text-lg">Learn
+                        more</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Section -->
+        <section class="mb-32">
+            <h2 class="reveal text-5xl md:text-6xl font-black text-center mb-16 tracking-tight">Ready, set, AI</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Large Video Card -->
+                <div
+                    class="reveal lg:col-span-7 bg-white dark:bg-surfaceCardDark rounded-[2.5rem] p-4 shadow-xl border border-black/5 dark:border-white/5 group cursor-pointer hover-lift">
+                    <div
+                        class="bg-surface rounded-[2rem] h-[380px] relative overflow-hidden flex flex-col p-10 border-[6px] border-primary/20 group-hover:border-primary transition-colors duration-500">
+                        <!-- Abstract glow -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent"></div>
+
+                        <div
+                            class="absolute top-8 right-8 bg-primary text-surface px-4 py-1.5 rounded-lg text-xs font-bold z-10 shadow-lg transform rotate-2 group-hover:rotate-0 transition-transform">
+                            thedesignsystem.guide
+                        </div>
+                        <h3
+                            class="text-5xl md:text-[4.5rem] font-black text-white leading-[1.05] max-w-[85%] mt-auto md:mt-12 relative z-10 transform group-hover:scale-[1.02] origin-left transition-transform duration-500">
+                            Vibe-coding<br>for designers<br>series
+                        </h3>
+
+                        <!-- Abstract Video Graphics -->
+                        <div class="absolute bottom-8 right-8 flex gap-3 z-10">
+                            <div
+                                class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl border border-white/20 shadow-2xl flex items-center justify-center transform rotate-6 group-hover:rotate-12 transition-transform duration-500">
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full border-4 border-white/30"></div>
+                            </div>
+                            <div
+                                class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl border border-white/20 shadow-2xl flex items-center justify-center transform -rotate-12 group-hover:-rotate-6 transition-transform duration-500">
+                                <div class="w-6 h-6 md:w-8 md:h-8 bg-white rounded-md"></div>
+                            </div>
+                            <div
+                                class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-white to-gray-300 rounded-2xl border border-white/20 shadow-2xl flex items-center justify-center transform rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                                <div class="w-8 h-8 md:w-10 md:h-10 text-orange-500"><svg viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
+                                    </svg></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 flex items-center gap-3">
+                        <span
+                            class="bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400 text-[10px] font-bold px-3 py-1.5 rounded-md">AI</span>
+                        <span
+                            class="bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400 text-[10px] font-bold px-3 py-1.5 rounded-md">YOUTUBE</span>
+                        <h4 class="text-textLight dark:text-textMain font-bold ml-2 text-lg md:text-xl">Vibe-coding
+                            series for designers video series</h4>
+                    </div>
+                </div>
+
+                <!-- Small Article Cards -->
+                <div class="lg:col-span-5 flex flex-col gap-5">
+                    <!-- Article 1 -->
+                    <div class="reveal bg-white dark:bg-surfaceCardDark rounded-3xl p-4 flex gap-5 items-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer border border-black/5 dark:border-white/10"
+                        style="transition-delay: 0.1s;">
+                        <div
+                            class="w-32 h-28 bg-gradient-to-br from-blue-900 to-blue-600 rounded-2xl flex items-center justify-center relative overflow-hidden flex-shrink-0 shadow-inner">
+                            <span
+                                class="absolute top-2 left-2 text-[8px] font-bold bg-white/20 text-white px-2 py-0.5 rounded backdrop-blur-md">Documentation</span>
+                            <div class="text-white text-xs font-bold text-center leading-tight px-2">How to
+                                Automate<br>Design System</div>
+                        </div>
+                        <div>
+                            <span
+                                class="bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400 text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">AI</span>
+                            <h4 class="text-textLight dark:text-textMain font-bold leading-snug text-base md:text-lg">
+                                How to automate design system documentation</h4>
+                        </div>
+                    </div>
+                    <!-- Article 2 -->
+                    <div class="reveal bg-white dark:bg-surfaceCardDark rounded-3xl p-4 flex gap-5 items-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer border border-black/5 dark:border-white/10"
+                        style="transition-delay: 0.2s;">
+                        <div
+                            class="w-32 h-28 bg-gradient-to-br from-orange-500 to-pink-500 rounded-2xl flex items-center justify-center relative overflow-hidden flex-shrink-0 shadow-inner">
+                            <span
+                                class="absolute top-2 left-2 text-[8px] font-bold bg-white/20 text-white px-2 py-0.5 rounded backdrop-blur-md">Guide</span>
+                            <div class="text-white text-xs font-bold text-center leading-tight px-2">AI
+                                patterns<br>Generation</div>
+                        </div>
+                        <div>
+                            <span
+                                class="bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400 text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">AI</span>
+                            <h4 class="text-textLight dark:text-textMain font-bold leading-snug text-base md:text-lg">
+                                How to build patterns from your design system components with AI</h4>
+                        </div>
+                    </div>
+                    <!-- Article 3 -->
+                    <div class="reveal bg-white dark:bg-surfaceCardDark rounded-3xl p-4 flex gap-5 items-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer border border-black/5 dark:border-white/10"
+                        style="transition-delay: 0.3s;">
+                        <div
+                            class="w-32 h-28 bg-gradient-to-br from-indigo-900 to-purple-800 rounded-2xl flex items-center justify-center relative overflow-hidden flex-shrink-0 shadow-inner">
+                            <span
+                                class="absolute top-2 left-2 text-[8px] font-bold bg-white/20 text-white px-2 py-0.5 rounded backdrop-blur-md">Framework</span>
+                            <div class="text-white text-xs font-bold text-center leading-tight px-2">AI
+                                component<br>Generation</div>
+                        </div>
+                        <div>
+                            <span
+                                class="bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400 text-[10px] font-bold px-2 py-1 rounded mb-3 inline-block">AI</span>
+                            <h4 class="text-textLight dark:text-textMain font-bold leading-snug text-base md:text-lg">
+                                The Ultimate AI Component Generation Framework</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer
+        class="bg-gray-100 dark:bg-[#17151C] rounded-t-[3rem] mt-12 pt-20 pb-8 px-6 border-t border-black/5 dark:border-white/5 transition-colors duration-500">
+        <div class="max-w-[1200px] mx-auto">
+
+            <!-- Footer Newsletter Banner -->
+            <div
+                class="reveal bg-white dark:bg-gradient-to-r dark:from-[#201E2B] dark:to-[#1A1824] rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 mb-20 border border-black/5 dark:border-white/5 shadow-xl hover-lift">
+                <div>
+                    <h4 class="text-2xl font-bold mb-2 text-textLight dark:text-textMain">DSG (Design, Systems, Growth)
+                        Newsletter</h4>
+                    <p class="text-textMutedLight dark:text-textMuted text-base">AI, design systems, and product
+                        strategy in your inbox. No ads, no fluff.</p>
+                </div>
+                <button
+                    class="bg-surface text-white dark:bg-white dark:text-surface dark:hover:bg-gray-200 hover:bg-gray-800 font-bold px-8 py-4 rounded-full flex items-center gap-3 whitespace-nowrap transition-all transform active:scale-95 shadow-md text-lg">
+                    Subscribe here <span
+                        class="text-xl leading-none transition-transform group-hover:translate-x-1">→</span>
+                </button>
+            </div>
+
+            <!-- Footer Links -->
+            <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-10 mb-20">
+                <div>
+                    <h5 class="text-textMutedLight dark:text-textMuted mb-6 text-sm font-bold uppercase tracking-wider">
+                        Courses</h5>
+                    <ul class="space-y-4 text-base font-medium text-gray-700 dark:text-white/90">
+                        <li><a href="#" class="hover:text-primary transition-colors">Design Tokens Course 🔥</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">The Design System Inventory ⭐</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-textMutedLight dark:text-textMuted mb-6 text-sm font-bold uppercase tracking-wider">
+                        Learn</h5>
+                    <ul class="space-y-4 text-base font-medium text-gray-700 dark:text-white/90">
+                        <li><a href="#" class="hover:text-primary transition-colors">Build a Design System</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Knowledge Base</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Design System Metrics</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Design System Research
+                                Questions</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">DSG Podcast</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-textMutedLight dark:text-textMuted mb-6 text-sm font-bold uppercase tracking-wider">
+                        Resources</h5>
+                    <ul class="space-y-4 text-base font-medium text-gray-700 dark:text-white/90">
+                        <li><a href="#" class="hover:text-primary transition-colors">AI Design Guide</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Resources</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Bookmarks</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-textMutedLight dark:text-textMuted mb-6 text-sm font-bold uppercase tracking-wider">
+                        Let's connect</h5>
+                    <ul class="space-y-4 text-base font-medium text-gray-700 dark:text-white/90">
+                        <li><a href="#" class="hover:text-primary transition-colors">Work with me 🙋‍♀️</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">LinkedIn</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">YouTube</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Twitter (X)</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Sponsorship</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div
+                class="text-center text-textMutedLight dark:text-textMuted text-sm pt-8 border-t border-black/5 dark:border-white/5 font-medium">
+                © 2022 - 2026 The Design System Guide by <span class="text-textLight dark:text-white font-bold">Romina
+                    Kavcic</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', function () {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+
+        // Premium Scroll Reveal Animation Logic (Apple-style blur reveal)
+        document.addEventListener("DOMContentLoaded", function () {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50px 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Optional: Stop observing once revealed
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach((element) => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+
+</html>
