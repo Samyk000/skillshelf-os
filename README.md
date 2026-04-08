@@ -1,102 +1,90 @@
-# 🎨 Skillshelf Open Design
+<div align="center">
+  <img src="skills/nova-ai/cover.png" width="200" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);" />
+  <h1>🎨 Skillshelf Open Design</h1>
+  <p><b>The largest open-source registry of AI-ready design systems.</b></p>
+  <p>Drop a <code>SKILL.md</code> into your project root and give your AI coding agent pixel-perfect design DNA.</p>
 
-The largest open-source registry of AI-ready design systems. Drop a `SKILL.md` into your project and give your AI coding agent pixel-perfect design DNA.
+  [![Skills Count](https://img.shields.io/badge/Skills-9-C9FF45?style=for-the-badge&labelColor=000000)](skills/)
+  [![License](https://img.shields.io/badge/license-MIT-000000?style=flat-square)](LICENSE)
+  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-000000?style=flat-square)](CONTRIBUTING.md)
+  [![Website](https://img.shields.io/badge/Live_App-Visit-C9FF45?style=flat-square&labelColor=000000)](https://skillshelf-liart.vercel.app)
+</div>
 
-[![Skills Count](https://img.shields.io/badge/Skills-9-C9FF45?style=for-the-badge&labelColor=000000)](skills/)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+---
 
 ## ⚡ Quick Start
-Copy a `SKILL.md` into your project, tell your AI agent "follow the design system in SKILL.md" and get pixel-perfect UI that actually matches.
+1. **Copy** a `SKILL.md` from the collection below into your project root.
+2. **Prompt** your AI agent (Cursor, Claude, Copilot): 
+   > *"Build a landing page following the design system defined in SKILL.md"*
+3. **Enjoy** pixel-perfect UI that matches professional design standards.
+
+---
 
 ## 📖 What is SKILL.md?
-`SKILL.md` is a plain-text design system document optimized for AI coding agents. It's the missing link between generic AI output and professional, consistent UI.
+`SKILL.md` is a plain-text design system document optimized for AI coding agents. No Figma exports, no JSON schemas, no special tooling—just raw instructions your AI instantly understands.
 
-It's just a markdown file. No Figma exports, no JSON schemas, no special tooling. Drop it into your project root and any AI coding agent (Cursor, Claude Code, Copilot) instantly understands how your UI should look and behave.
+| 🔥 Benefit | Description |
+| :--- | :--- |
+| **Consistency** | Ensures every component follows the same color, type, and spacing scales. |
+| **Logic** | Defines not just how it looks, but how it *behaves* (transitions, states). |
+| **Speed** | Stops the AI from guessing "standard" styles and fixes hallucinated defaults. |
 
-| File | Who reads it | What it defines |
-|------|--------------|-----------------|
-| `AGENTS.md` | Coding agents | How to build the project |
-| `SKILL.md` | Design agents | How the project should look and feel |
+---
 
-This repo provides ready-to-use `SKILL.md` files extracted from real websites and handcrafted for maximum AI comprehension.
+## 🗂️ The Collection
 
-## 📦 What's Inside Each SKILL.md
-Every file follows a strict, LLM-optimized structure:
+### 💰 Finance & Wealth
+*Sophisticated, trustworthy, and high-performance interfaces.*
 
-| # | Section | What it captures |
-|---|---------|------------------|
-| 1 | Mission & Brand | Design philosophy, mood, target audience |
-| 2 | Style Foundations | Typography, colors, spacing, borders, shadows |
-| 3 | Component Families | Buttons, cards, inputs, navigation with states |
-| 4 | Accessibility | WCAG compliance, contrast ratios, theme support |
-| 5 | Do's & Don'ts | Design guardrails and anti-patterns |
-| 6 | Expected Behavior | Interactions, animations, hover states |
-| 7 | Quality Gates | Validation checklist for AI output |
-| 8 | Agent Prompt Guide | Ready-to-use prompts for generation |
+| [![Aegis Glow](skills/aegis-glow/cover.png)](skills/aegis-glow/) | [![PureWealth](skills/purewealth/cover.png)](skills/purewealth/) | [![AuraWealth](skills/aurawealth/cover.png)](skills/aurawealth/) |
+| :---: | :---: | :---: |
+| [**Aegis Glow**](skills/aegis-glow/) | [**PureWealth**](skills/purewealth/) | [**AuraWealth**](skills/aurawealth/) |
+| *Obsidian & Copper Fintech* | *Warm Minimalist SaaS* | *Organic Glassmorphic Finance* |
 
-Each skill includes:
+### 🛠️ Productivity & Admin
+*Structured, efficient, and data-dense layouts for professionals.*
 
-| File | Purpose |
-|------|---------|
-| `SKILL.md` | The design system (what agents read) |
-| `preview.html` | Visual catalog showing colors, type scale, components |
-| `cover.png` | Thumbnail for quick identification |
+| [![ForgeUI](skills/forge-ui/cover.png)](skills/forge-ui/) | [![FluxBoard](skills/fluxboard/cover.png)](skills/fluxboard/) | [![Quantify](skills/quantify/cover.png)](skills/quantify/) |
+| :---: | :---: | :---: |
+| [**ForgeUI**](skills/forge-ui/) | [**FluxBoard**](skills/fluxboard/) | [**Quantify**](skills/quantify/) |
+| *Developer-First Dark IDE* | *Premium Neo-Dark Kanban* | *Data-Dense Analytics* |
 
-## 🚀 How to Use
-1. Copy a skill's `SKILL.md` into your project root
-2. Tell your AI agent to use it
+### 🚀 Future-Forward SaaS
+*Modern, vibrant, and experimental designs for next-gen apps.*
 
-```bash
-# Example: Copy ForgeUI to your project
-cp skills/forge-ui/SKILL.md ./SKILL.md
+| [![Nova AI](skills/nova-ai/cover.png)](skills/nova-ai/) | [![Ecovolt](skills/ecovolt/cover.png)](skills/ecovolt/) | [![Big Shaped](skills/big-shaped/cover.png)](skills/big-shaped/) |
+| :---: | :---: | :---: |
+| [**Nova AI**](skills/nova-ai/) | [**Ecovolt**](skills/ecovolt/) | [**Big Shaped**](skills/big-shaped/) |
+| *Radiant Soft-Glass AI* | *Eco-Brutalist Clean Tech* | *Architectural Typography* |
 
-# Then prompt your AI:
-# "Build a landing page following the design system in SKILL.md"
-```
+<div align="center">
+  <br />
+  <p><b>More Coming Soon...</b></p>
+  <a href="https://github.com/Samyk000/skillshelf-os/issues/new?template=request-skill.yml">Request a Skill</a> • <a href="CONTRIBUTING.md">Contribute</a>
+</div>
 
-## 📥 Request a Skill
-[Open a GitHub issue with this template](https://github.com/Samyk000/skillshelf-os/issues/new?template=request-skill.yml) to request a `SKILL.md` generation for a website.
+---
 
-## 🗂️ Collection
+## 📦 What's Inside?
+Every skill follows a rigorous, AI-optimized structure:
+- **Style Foundations:** Exact HEX codes, type scales, and spacing units.
+- **Component Families:** Detailed rules for buttons, cards, and inputs.
+- **Rules: Do/Don't:** Essential guardrails to prevent design drift.
+- **Behavior:** Interaction logic and state transitions.
+- **Agent Prompts:** Pre-written prompts to jumpstart your development.
 
-### Finance & Wealth
-- [**Aegis Glow**](skills/aegis-glow/) - Obsidian Glow Fintech UI. Luxurious metallic interfaces with cinematic copper lighting and glassmorphic cards.
-- [**PureWealth**](skills/purewealth/) - Warm Minimalist SaaS. Sophisticated palette of pure white and soft beige with asymmetrical bento grid layouts.
-- [**AuraWealth**](skills/aurawealth/) - Organic FinTech. Structured UI floating above deep, blurred nature motifs with striking lime accents.
-
-### Productivity & Admin
-- [**ForgeUI**](skills/forge-ui/) - Developer-first dark app. High-contrast IDE aesthetic with pastel accents, bento grids, and seamless themes.
-- [**FluxBoard**](skills/fluxboard/) - Premium Kanban Design. Neo-Dark Bento style with high contrast, vibrant accent blocks, and ambient productivity glows.
-- [**Quantify**](skills/quantify/) - Data-Dense Analytics UI. High-structure, information-rich interfaces with vibrant lime-green accents.
-
-### Future-Forward SaaS
-- [**Nova AI**](skills/nova-ai/) - Radiant Soft-Glass AI. Airy SaaS interfaces with sunburst gradients, floating 3D glassmorphic cards, and warm AI Spark accents.
-- [**Ecovolt**](skills/ecovolt/) - Eco-Brutalist Clean Tech. Stark typography meets organic softness with neon lime accents and pill-shaped containers.
-- [**Big Shaped**](skills/big-shaped/) - Big Shaped design system. Stark architectural typography meets organic softness with neon lime accents and floating glassmorphic overlays.
-
-### More Coming Soon
-We're actively adding new design systems. [Request one](https://github.com/Samyk000/skillshelf-os/issues/new?template=request-skill.yml) or [contribute your own](CONTRIBUTING.md).
+---
 
 ## 🤝 Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-- **Add new skills**: Follow the template in `templates/SKILL.md`
-- **Improve existing files**: Fix wrong colors, missing tokens, weak descriptions
-- **Report issues**: Let us know if something looks off
-
-Before opening a PR, please [open an issue](https://github.com/Samyk000/skillshelf-os/issues) first to discuss your idea and get feedback from maintainers.
-
-## 🌐 Hosted Version
-Want a visual browser, likes, saves, and premium skills? Try the full **Skillshelf** app at [skillshelf-liart.vercel.app](https://skillshelf-liart.vercel.app).
-
-## 📜 License
-MIT License - see [LICENSE](LICENSE)
-
-This repository is a curated collection of design system documents. All `SKILL.md` files are provided "as is" without warranty. The extracted design tokens represent publicly visible CSS values. We do not claim ownership of any site's visual identity. These documents exist to help AI agents generate consistent UI.
+We love contributions! Whether it's a new skill or an adjustment to an existing one.
+1. Follow the template in `templates/SKILL.md`
+2. Ensure you include a `preview.html` and a high-quality `cover.png`.
+3. Open a PR and let's build the future of AI-driven design together.
 
 ---
 
 <div align="center">
   <sub>Built with ❤️ by <a href="https://github.com/Samyk000">Samyk000</a></sub>
+  <br />
+  <sub>Licensed under MIT © 2026</sub>
 </div>
