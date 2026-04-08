@@ -72,6 +72,9 @@ cp skills/forge-ui/SKILL.md ./SKILL.md
 ### AI & ML
 - [**Nova AI**](skills/nova-ai/) - Radiant Soft-Glass AI. Airy SaaS interfaces with sunburst gradients, floating 3D glassmorphic cards, and warm AI Spark accents.
 
+### Design System
+- [**Big Shaped**](skills/big-shaped/) - Big Shaped design system. Stark architectural typography meets organic softness with neon lime accents and floating glassmorphic overlays.
+
 ### More Coming Soon
 We're actively adding new design systems. [Request one](https://github.com/Samyk000/skillshelf-OpenDesign/issues/new?template=request-skill.yml) or [contribute your own](CONTRIBUTING.md).
 
