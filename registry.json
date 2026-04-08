@@ -96,6 +96,79 @@
         "preview": "preview.html",
         "cover": "cover.png"
       }
+    },
+    {
+      "slug": "quantify",
+      "title": "Quantify",
+      "category": "Analytics",
+      "tags": [
+        "light",
+        "gray",
+        "lime",
+        "analytics",
+        "data-dense",
+        "modern"
+      ],
+      "description": "Data-Dense Analytics UI. High-structure, information-rich interfaces with vibrant lime-green accents and crisp flexible card layouts.",
+      "files": {
+        "skill": "SKILL.md",
+        "preview": "preview.html",
+        "cover": "cover.png"
+      }
+    },
+    {
+      "slug": "purewealth",
+      "title": "PureWealth",
+      "category": "Fintech",
+      "tags": [
+        "warm",
+        "minimalist",
+        "saas",
+        "beige",
+        "premium"
+      ],
+      "description": "Warm Minimalist SaaS Design. Sophisticated palette of pure white and soft beige with asymetrical bento grid layouts.",
+      "files": {
+        "skill": "SKILL.md",
+        "preview": "preview.html",
+        "cover": "cover.png"
+      }
+    },
+    {
+      "slug": "aurawealth",
+      "title": "AuraWealth",
+      "category": "Fintech",
+      "tags": [
+        "organic",
+        "fintech",
+        "glassmorphism",
+        "nature",
+        "lime"
+      ],
+      "description": "Organic FinTech Design. Structured UI components floating above deep, blurred nature motifs with striking lime accents.",
+      "files": {
+        "skill": "SKILL.md",
+        "preview": "preview.html",
+        "cover": "cover.png"
+      }
+    },
+    {
+      "slug": "fluxboard",
+      "title": "FluxBoard",
+      "category": "Productivity",
+      "tags": [
+        "dark",
+        "kanban",
+        "bento",
+        "neon",
+        "pastel"
+      ],
+      "description": "Premium Kanban Design. Neo-Dark Bento style with high contrast, vibrant accent blocks, and ambient productivity glows.",
+      "files": {
+        "skill": "SKILL.md",
+        "preview": "preview.html",
+        "cover": "cover.png"
+      }
     }
   ]
 }

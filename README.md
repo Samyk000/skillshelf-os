@@ -2,7 +2,7 @@
 
 The largest open-source registry of AI-ready design systems. Drop a `SKILL.md` into your project and give your AI coding agent pixel-perfect design DNA.
 
-[![Skills](https://img.shields.io/badge/skills-5-blue)](skills/)
+[![Skills Count](https://img.shields.io/badge/Skills-9-C9FF45?style=for-the-badge&labelColor=000000)](skills/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 

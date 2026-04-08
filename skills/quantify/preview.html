@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantify - Analytics Dashboard</title>
+    
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            'bg-light': '#F3F4F6', // Light gray app background
+                            'bg-dark': '#0F1115',
+                            'surface-light': '#FFFFFF',
+                            'surface-dark': '#1C1F26',
+                            'text-main': '#111827',
+                            'text-dark': '#F9FAFB',
+                            'text-muted': '#6B7280',
+                            'text-muted-dark': '#9CA3AF',
+                            'border-light': '#E5E7EB',
+                            'border-dark': '#2D333B',
+                            'accent': '#B5E64D', // The signature vibrant lime green
+                            'accent-hover': '#9DCC3D',
+                            'accent-orange': '#FB923C',
+                            'accent-purple': '#A78BFA',
+                            'accent-blue': '#60A5FA',
+                            'success': '#22C55E',
+                            'danger': '#EF4444',
+                            'warning': '#EAB308'
+                        }
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04)',
+                        'card-dark': '0 4px 6px -1px rgba(0, 0, 0, 0.4)',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'grow-bar': 'growBar 1s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(15px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        growBar: {
+                            '0%': { height: '0%' },
+                            '100%': { height: 'var(--target-height)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        *, *::before, *::after {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Gauge Chart Animation */
+        .gauge-arc {
+            stroke-dasharray: 100 100;
+            stroke-dashoffset: 100;
+            animation: fillGauge 1.5s ease-out forwards;
+        }
+        @keyframes fillGauge {
+            to { stroke-dashoffset: var(--target-offset); }
+        }
+
+        /* Custom Scrollbar for tables */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #D1D5DB;
+            border-radius: 10px;
+        }
+        html.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4B5563;
+        }
+
+        .delay-100 { animation-delay: 100ms; opacity: 0; }
+        .delay-200 { animation-delay: 200ms; opacity: 0; }
+        .delay-300 { animation-delay: 300ms; opacity: 0; }
+    </style>
+</head>
+<body class="bg-brand-bg-light dark:bg-brand-bg-dark text-brand-text-main dark:text-brand-text-dark font-sans min-h-screen selection:bg-brand-accent selection:text-black">
+
+    <header class="w-full bg-brand-bg-light dark:bg-brand-bg-dark pt-6 px-6 lg:px-10 flex items-center justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-2 cursor-pointer">
+            <div class="w-8 h-8 bg-brand-text-main dark:bg-white rounded-lg flex flex-col items-center justify-center gap-1 p-1.5">
+                <div class="w-full h-1 bg-brand-bg-light dark:bg-black rounded-full"></div>
+                <div class="w-2/3 h-1 bg-brand-bg-light dark:bg-black rounded-full self-start"></div>
+                <div class="w-full h-1 bg-brand-bg-light dark:bg-black rounded-full"></div>
+            </div>
+            <span class="font-bold text-xl tracking-tight">Quantify</span>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-2 bg-white dark:bg-brand-surface-dark p-1.5 rounded-full border border-brand-border-light dark:border-brand-border-dark shadow-sm">
+            <a href="#" class="px-5 py-2 rounded-full text-sm font-bold bg-brand-accent text-black shadow-sm transition-transform hover:scale-105">Overview</a>
+            <a href="#" class="px-5 py-2 rounded-full text-sm font-medium text-brand-text-muted hover:text-brand-text-main dark:hover:text-white transition-colors">Analytics</a>
+            <a href="#" class="px-5 py-2 rounded-full text-sm font-medium text-brand-text-muted hover:text-brand-text-main dark:hover:text-white transition-colors">Users</a>
+            <a href="#" class="px-5 py-2 rounded-full text-sm font-medium text-brand-text-muted hover:text-brand-text-main dark:hover:text-white transition-colors">Finance</a>
+            <a href="#" class="px-5 py-2 rounded-full text-sm font-medium text-brand-text-muted hover:text-brand-text-main dark:hover:text-white transition-colors">Settings</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+            <button id="theme-toggle" class="p-2 text-brand-text-muted hover:text-brand-text-main dark:hover:text-white transition-colors focus:outline-none">
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            </button>
+            <button class="relative p-2 text-brand-text-muted hover:text-brand-text-main dark:hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-brand-danger rounded-full border-2 border-brand-bg-light dark:border-brand-bg-dark"></span>
+            </button>
+            <div class="flex items-center gap-3 bg-white dark:bg-brand-surface-dark pl-2 pr-4 py-1.5 rounded-full border border-brand-border-light dark:border-brand-border-dark cursor-pointer shadow-sm hover:shadow-md transition-shadow">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=100&auto=format&fit=crop" alt="User" class="w-8 h-8 rounded-full object-cover">
+                <div class="hidden sm:flex flex-col">
+                    <span class="text-sm font-semibold leading-tight">Alex Mercer</span>
+                    <span class="text-[10px] text-brand-text-muted">Admin</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="w-full px-6 lg:px-10 py-8 max-w-[1600px] mx-auto flex flex-col gap-6">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 animate-fade-in-up">
+            <div>
+                <h1 class="text-2xl font-bold mb-1">Welcome back, Alex 👋</h1>
+                <p class="text-sm text-brand-text-muted">Here is an overview of your platform's insights, revenue, and active subscriptions.</p>
+            </div>
+            <button class="bg-white dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark px-4 py-2.5 rounded-xl text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-brand-border-dark transition-colors flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                Export Report
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <div class="lg:col-span-4 grid grid-cols-2 gap-4 animate-fade-in-up delay-100">
+                <div class="bg-white dark:bg-brand-surface-dark rounded-[1.25rem] p-5 shadow-card dark:shadow-card-dark border border-brand-border-light dark:border-brand-border-dark flex flex-col justify-between hover:shadow-card-hover transition-shadow group cursor-pointer">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-sm font-medium text-brand-text-muted">Total Subscriptions</span>
+                        <div class="p-2 bg-gray-50 dark:bg-black/20 rounded-lg text-brand-text-main dark:text-white group-hover:bg-brand-accent group-hover:text-black transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-2">15,234</h3>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-brand-success font-medium flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                                4.2% vs Last Week
+                            </span>
+                            <span class="text-brand-text-muted hover:text-brand-text-main dark:hover:text-white transition-colors">Details ↗</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-brand-surface-dark rounded-[1.25rem] p-5 shadow-card dark:shadow-card-dark border border-brand-border-light dark:border-brand-border-dark flex flex-col justify-between hover:shadow-card-hover transition-shadow group cursor-pointer">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-sm font-medium text-brand-text-muted">MRR</span>
+                        <div class="p-2 bg-gray-50 dark:bg-black/20 rounded-lg text-brand-text-main dark:text-white group-hover:bg-brand-accent group-hover:text-black transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-2">$82,450</h3>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-brand-success font-medium flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                                3.8% vs Last Week
+                            </span>
+                            <span class="text-brand-text-muted hover:text-brand-text-main dark:hover:text-white transition-colors">Details ↗</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-brand-surface-dark rounded-[1.25rem] p-5 shadow-card dark:shadow-card-dark border border-brand-border-light dark:border-brand-border-dark flex flex-col justify-between hover:shadow-card-hover transition-shadow group cursor-pointer">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-sm font-medium text-brand-text-muted">Active Users</span>
+                        <div class="p-2 bg-gray-50 dark:bg-black/20 rounded-lg text-brand-text-main dark:text-white group-hover:bg-brand-accent group-hover:text-black transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-2">5,892</h3>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-brand-success font-medium flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                                1.2% New Users
+                            </span>
+                            <span class="text-brand-text-muted hover:text-brand-text-main dark:hover:text-white transition-colors">Details ↗</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-brand-surface-dark rounded-[1.25rem] p-5 shadow-card dark:shadow-card-dark border border-brand-border-light dark:border-brand-border-dark flex flex-col justify-between hover:shadow-card-hover transition-shadow group cursor-pointer">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-sm font-medium text-brand-text-muted">Churn Rate</span>
+                        <div class="p-2 bg-gray-50 dark:bg-black/20 rounded-lg text-brand-text-main dark:text-white group-hover:bg-brand-danger group-hover:text-white transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-2">2.4%</h3>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-brand-danger font-medium flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7-7V3"></path></svg>
+                                0.3% vs Last Week
+                            </span>
+                            <span class="text-brand-text-muted hover:text-brand-text-main dark:hover:text-white transition-colors">Details ↗</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 bg-white dark:bg-brand-surface-dark rounded-[1.25rem] p-6 shadow-card dark:shadow-card-dark border border-brand-border-light dark:border-brand-border-dark flex flex-col animate-fade-in-up delay-200">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-lg font-bold">Revenue Overview</h2>
+                    <button class="text-brand-text-muted hover:text-brand-text-main dark:hover:text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                </div>
+                
+                <div class="flex items-end gap-4 mb-6">
+                    <span class="text-4xl font-black tracking-tight">$124,500</span>
+                    <span class="bg-brand-accent text-black text-xs font-bold px-2 py-1 rounded flex items-center gap-1 mb-1">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                        12.4%
+                    </span>
+                </div>
+
+                <div class="flex-grow flex items-end justify-between gap-2 md:gap-4 pt-4 relative">
+                    <div class="absolute left-0 top-0 h-full flex flex-col justify-between text-[10px] text-brand-text-muted pb-6">
+                        <span>100k</span><span>80k</span><span>60k</span><span>40k</span><span>20k</span><span>0</span>
+                    </div>
+                    
+                    <div class="w-full h-full flex items-end justify-between gap-1 sm:gap-2 ml-8 pb-6 border-b border-brand-border-light dark:border-brand-border-dark relative">
+                        <div class="w-full flex flex-col items-center group cursor-pointer">
+                            <div class="w-full bg-gray-100 dark:bg-brand-border-dark rounded-t-md animate-grow-bar group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors" style="--target-height: 40%"></div>
+                            <span class="absolute -bottom-6 text-[10px] text-brand-text-muted">May</span>
+                        </div>
+                        <div class="w-full flex flex-col items-center group cursor-pointer">
+                            <div class="w-full bg-gray-100 dark:bg-brand-border-dark rounded-t-md animate-grow-bar group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors" style="--target-height: 55%"></div>
+                            <span class="absolute -bottom-6 text-[10px] text-brand-text-muted">Jun</span>
+                        </div>
+                        <div class="w-full flex flex-col items-center group cursor-pointer">
+                            <div class="w-full bg-gray-100 dark:bg-brand-border-dark rounded-t-md animate-grow-bar group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors" style="--target-height: 45%"></div>
+                            <span class="absolute -bottom-6 text-[10px] text-brand-text-muted">Jul</span>
+                        </div>
+                        <div class="w-full flex flex-col items-center group cursor-pointer">
+                            <div class="w-full bg-gray-100 dark:bg-brand-border-dark rounded-t-md animate-grow-bar group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors" style="--target-height: 60%"></div>
+                            <span class="absolute -bottom-6 text-[10px] text-brand-text-muted">Aug</span>
+                        </div>
+                        <div class="w-full flex flex-col items-center relative cursor-pointer">
+                            <div class="absolute -top-14 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-lg rounded-lg p-2 text-center z-10 w-max pointer-events-none">
+                                <p class="text-[9px] text-brand-text-muted">September 2026</p>
+                                <p class="text-xs font-bold flex items-center justify-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-accent-orange"></span> $82,450
+                                </p>
+                            </div>
+                            <div class="w-full bg-brand-accent-orange rounded-t-md animate-grow-bar relative" style="--target-height: 85%">
+                                <div class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-4 h-1.5 bg-brand-accent-orange rounded-full"></div>
+                            </div>
+                            <span class="absolute -bottom-6 text-[10px] font-bold text-brand-text-main dark:text-white">Sep</span>
+                        </div>
+                        <div class="w-full flex flex-col items-center group cursor-pointer">
+                            <div class="w-full bg-gray-100 dark:bg-brand-border-dark rounded-t-md animate-grow-bar group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors" style="--target-height: 70%"></div>
+                            <span class="absolute -bottom-6 text-[10px] text-brand-text-muted">Oct</span>
+                        </div>
+                        <div class="w-full flex flex-col items-center group cursor-pointer">
+                            <div class="w-full bg-gray-100 dark:bg-brand-border-dark rounded-t-md animate-grow-bar group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors" style="--target-height: 50%"></div>
+                            <span class="absolute -bottom-6 text-[10px] text-brand-text-muted">Nov</span>
+                        </div>
+                        <div class="w-full flex flex-col items-center group cursor-pointer">
+                            <div class="w-full bg-gray-100 dark:bg-brand-border-dark rounded-t-md animate-grow-bar group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors" style="--target-height: 65%"></div>
+                            <span class="absolute -bottom-6 text-[10px] text-brand-text-muted">Dec</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 bg-white dark:bg-brand-surface-dark rounded-[1.25rem] p-6 shadow-card dark:shadow-card-dark border border-brand-border-light dark:border-brand-border-dark flex flex-col animate-fade-in-up delay-300">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold">Retention Rate</h2>
+                    <button class="text-brand-text-muted hover:text-brand-text-main dark:hover:text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                </div>
+
+                <div class="relative w-full aspect-[2/1] flex items-end justify-center overflow-hidden mb-6">
+                    <svg viewBox="0 0 100 50" class="w-full h-full absolute bottom-0">
+                        <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="currentColor" stroke-width="12" stroke-dasharray="2 3" class="text-gray-100 dark:text-brand-border-dark" />
+                        <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#B5E64D" stroke-width="12" stroke-dasharray="2 3" stroke-dashoffset="0" pathLength="100" class="gauge-arc" style="--target-offset: 15;" />
+                    </svg>
+                    <div class="absolute bottom-0 flex flex-col items-center">
+                        <span class="text-3xl font-black">85.2%</span>
+                        <span class="text-xs text-brand-text-muted">User Retention</span>
+                    </div>
+                    <div class="absolute top-2 left-4 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm rounded-md px-2 py-1 text-[10px] font-bold flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-brand-accent-orange"></span> 85.2%
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mt-auto border-t border-brand-border-light dark:border-brand-border-dark pt-4">
+                    <div>
+                        <p class="text-xs text-brand-text-muted flex items-center gap-1 mb-1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            Active Subs
+                        </p>
+                        <div class="flex items-end gap-2">
+                            <span class="text-lg font-bold">12,450</span>
+                            <span class="text-[10px] font-bold text-brand-success bg-brand-success/10 px-1 rounded mb-1">+2.4%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-xs text-brand-text-muted flex items-center gap-1 mb-1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            ARR
+                        </p>
+                        <div class="flex items-end gap-2">
+                            <span class="text-lg font-bold">$1.2M</span>
+                            <span class="text-[10px] font-bold text-brand-accent-orange bg-brand-accent-orange/10 px-1 rounded mb-1">+5.1%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <div class="lg:col-span-8 bg-white dark:bg-brand-surface-dark rounded-[1.25rem] p-6 shadow-card dark:shadow-card-dark border border-brand-border-light dark:border-brand-border-dark flex flex-col animate-fade-in-up delay-200 overflow-hidden">
+                
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-lg font-bold">Recent Subscriptions</h2>
+                        <p class="text-sm text-brand-text-muted">Keep track of all incoming upgrades.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-text-muted" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <input type="text" placeholder="Search" class="pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-[#13151A] border border-brand-border-light dark:border-brand-border-dark rounded-full focus:outline-none focus:border-brand-accent dark:text-white w-48 transition-colors">
+                        </div>
+                        <button class="px-4 py-2 text-sm font-medium border border-brand-border-light dark:border-brand-border-dark rounded-full hover:bg-gray-50 dark:hover:bg-[#13151A] transition-colors flex items-center gap-2">
+                            Filter <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left border-collapse min-w-[700px]">
+                        <thead>
+                            <tr class="text-xs text-brand-text-muted border-b border-brand-border-light dark:border-brand-border-dark">
+                                <th class="pb-3 font-medium w-8"><input type="checkbox" class="rounded border-gray-300"></th>
+                                <th class="pb-3 font-medium">Order ID</th>
+                                <th class="pb-3 font-medium">Plan Name</th>
+                                <th class="pb-3 font-medium">Customer</th>
+                                <th class="pb-3 font-medium">Date</th>
+                                <th class="pb-3 font-medium">Amount</th>
+                                <th class="pb-3 font-medium">Status</th>
+                                <th class="pb-3 font-medium text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="border-b border-brand-border-light dark:border-brand-border-dark hover:bg-gray-50 dark:hover:bg-[#13151A] transition-colors">
+                                <td class="py-4"><input type="checkbox" class="rounded border-gray-300"></td>
+                                <td class="py-4 font-medium">#10248</td>
+                                <td class="py-4 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-blue-100 text-brand-accent-blue flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></div>
+                                    <div>
+                                        <p class="font-bold">Enterprise Pro</p>
+                                        <p class="text-[10px] text-brand-text-muted">+ 5 Add-ons</p>
+                                    </div>
+                                </td>
+                                <td class="py-4">Stark Industries</td>
+                                <td class="py-4 text-brand-text-muted text-xs">21 Jan 2026</td>
+                                <td class="py-4 font-bold">$1,299.00</td>
+                                <td class="py-4"><span class="bg-brand-success/10 text-brand-success px-2 py-1 rounded text-xs font-bold">Active</span></td>
+                                <td class="py-4 text-right"><button class="text-brand-text-muted hover:text-brand-text-main dark:hover:text-white">•••</button></td>
+                            </tr>
+                            <tr class="border-b border-brand-border-light dark:border-brand-border-dark hover:bg-gray-50 dark:hover:bg-[#13151A] transition-colors">
+                                <td class="py-4"><input type="checkbox" class="rounded border-gray-300"></td>
+                                <td class="py-4 font-medium">#10249</td>
+                                <td class="py-4 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-orange-100 text-brand-accent-orange flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+                                    <div>
+                                        <p class="font-bold">Growth Tier</p>
+                                        <p class="text-[10px] text-brand-text-muted">Yearly billing</p>
+                                    </div>
+                                </td>
+                                <td class="py-4">Wayne Enterprises</td>
+                                <td class="py-4 text-brand-text-muted text-xs">21 Jan 2026</td>
+                                <td class="py-4 font-bold">$450.00</td>
+                                <td class="py-4"><span class="bg-brand-warning/10 text-brand-warning px-2 py-1 rounded text-xs font-bold">Pending</span></td>
+                                <td class="py-4 text-right"><button class="text-brand-text-muted hover:text-brand-text-main dark:hover:text-white">•••</button></td>
+                            </tr>
+                            <tr class="border-b border-brand-border-light dark:border-brand-border-dark hover:bg-gray-50 dark:hover:bg-[#13151A] transition-colors">
+                                <td class="py-4"><input type="checkbox" class="rounded border-gray-300"></td>
+                                <td class="py-4 font-medium">#10250</td>
+                                <td class="py-4 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-purple-100 text-brand-accent-purple flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg></div>
+                                    <div>
+                                        <p class="font-bold">Basic Starter</p>
+                                    </div>
+                                </td>
+                                <td class="py-4">Acme Corp</td>
+                                <td class="py-4 text-brand-text-muted text-xs">22 Jan 2026</td>
+                                <td class="py-4 font-bold">$49.00</td>
+                                <td class="py-4"><span class="bg-brand-success/10 text-brand-success px-2 py-1 rounded text-xs font-bold">Active</span></td>
+                                <td class="py-4 text-right"><button class="text-brand-text-muted hover:text-brand-text-main dark:hover:text-white">•••</button></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-[#13151A] transition-colors">
+                                <td class="py-4"><input type="checkbox" class="rounded border-gray-300"></td>
+                                <td class="py-4 font-medium">#10251</td>
+                                <td class="py-4 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-blue-100 text-brand-accent-blue flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></div>
+                                    <div>
+                                        <p class="font-bold">Enterprise Pro</p>
+                                        <p class="text-[10px] text-brand-text-muted">Monthly</p>
+                                    </div>
+                                </td>
+                                <td class="py-4">Globex</td>
+                                <td class="py-4 text-brand-text-muted text-xs">22 Jan 2026</td>
+                                <td class="py-4 font-bold">$199.00</td>
+                                <td class="py-4"><span class="bg-brand-danger/10 text-brand-danger px-2 py-1 rounded text-xs font-bold">Cancelled</span></td>
+                                <td class="py-4 text-right"><button class="text-brand-text-muted hover:text-brand-text-main dark:hover:text-white">•••</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 bg-white dark:bg-brand-surface-dark rounded-[1.25rem] p-6 shadow-card dark:shadow-card-dark border border-brand-border-light dark:border-brand-border-dark flex flex-col animate-fade-in-up delay-300">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-bold">Revenue Source</h2>
+                    <button class="text-brand-text-muted hover:text-brand-text-main dark:hover:text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg></button>
+                </div>
+
+                <div class="flex justify-between items-center mb-4 text-xs font-bold">
+                    <div class="flex flex-col gap-1"><span class="flex items-center gap-1 text-brand-accent-purple"><span class="w-2 h-2 rounded-full bg-brand-accent-purple"></span> Organic</span><span class="text-lg text-brand-text-main dark:text-white">40.78%</span></div>
+                    <div class="flex flex-col gap-1"><span class="flex items-center gap-1 text-brand-accent-orange"><span class="w-2 h-2 rounded-full bg-brand-accent-orange"></span> Referral</span><span class="text-lg text-brand-text-main dark:text-white">28.24%</span></div>
+                    <div class="flex flex-col gap-1"><span class="flex items-center gap-1 text-brand-accent-blue"><span class="w-2 h-2 rounded-full bg-brand-accent-blue"></span> Direct</span><span class="text-lg text-brand-text-main dark:text-white">21.16%</span></div>
+                </div>
+
+                <div class="w-full h-3 rounded-sm overflow-hidden flex gap-0.5 mb-8">
+                    <div class="h-full bg-brand-accent-purple" style="width: 40.78%"></div>
+                    <div class="h-full bg-brand-accent-orange" style="width: 28.24%"></div>
+                    <div class="h-full bg-brand-accent-blue" style="width: 21.16%"></div>
+                    <div class="h-full bg-brand-accent" style="width: 9.82%"></div>
+                </div>
+
+                <div class="flex text-xs font-medium text-brand-text-muted border-b border-brand-border-light dark:border-brand-border-dark pb-2 mb-4">
+                    <span class="flex-grow">Plan Tier</span>
+                    <span class="w-16 text-right">Percent</span>
+                    <span class="w-20 text-right">Earnings</span>
+                </div>
+                
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center text-sm">
+                        <div class="w-6 h-6 rounded bg-purple-100 text-brand-accent-purple flex items-center justify-center mr-3"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+                        <span class="font-bold flex-grow">Enterprise Pro</span>
+                        <span class="w-16 text-right font-medium text-brand-text-muted">40%</span>
+                        <span class="w-20 text-right font-bold">$42,000</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <div class="w-6 h-6 rounded bg-orange-100 text-brand-accent-orange flex items-center justify-center mr-3"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></div>
+                        <span class="font-bold flex-grow">Growth Tier</span>
+                        <span class="w-16 text-right font-medium text-brand-text-muted">35%</span>
+                        <span class="w-20 text-right font-bold">$28,600</span>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <div class="w-6 h-6 rounded bg-blue-100 text-brand-accent-blue flex items-center justify-center mr-3"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg></div>
+                        <span class="font-bold flex-grow">Basic Starter</span>
+                        <span class="w-16 text-right font-medium text-brand-text-muted">25%</span>
+                        <span class="w-20 text-right font-bold">$16,800</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        if (document.documentElement.classList.contains('dark')) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        var themeToggleBtn = document.getElementById('theme-toggle');
+
+        themeToggleBtn.addEventListener('click', function() {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>

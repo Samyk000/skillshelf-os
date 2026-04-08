@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PureWealth - Warm Minimalist SaaS</title>
+    
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            'bg': '#FAF9F6', // Warm off-white
+                            'bg-dark': '#121212',
+                            'surface': '#FFFFFF',
+                            'surface-dark': '#1E1E1E',
+                            'border': '#EBE8E0',
+                            'border-dark': '#2A2A2A',
+                            'text': '#1A1A1A',
+                            'text-dark': '#F5F5F5',
+                            'text-muted': '#7C786A',
+                            'accent': '#FFB347', // Warm Gold
+                            'accent-dark': '#D98E2F',
+                            'success': '#4A7C59',
+                            'danger': '#A54B4B'
+                        }
+                    },
+                    animation: {
+                        'reveal': 'reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        reveal: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            -webkit-font-smoothing: antialiased;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: 160px;
+            gap: 1.5rem;
+        }
+        @media (max-width: 1024px) {
+            .bento-grid { grid-template-columns: repeat(6, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .bento-grid { 
+                grid-template-columns: 1fr;
+                grid-auto-rows: auto;
+            }
+        }
+        .reveal { opacity: 0; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+    </style>
+</head>
+<body class="bg-brand-bg dark:bg-brand-bg-dark text-brand-text dark:text-brand-text-dark font-sans transition-colors duration-500 min-h-screen">
+
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-12 py-10">
+        
+        <nav class="flex items-center justify-between mb-16 animate-reveal">
+            <div class="flex items-center gap-10">
+                <div class="flex items-center gap-2 group cursor-pointer">
+                    <div class="w-10 h-10 bg-brand-text dark:bg-white rounded-2xl flex items-center justify-center transition-transform group-hover:rotate-[15deg]">
+                        <div class="w-5 h-5 border-2 border-brand-bg dark:border-brand-bg-dark rounded-full"></div>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight">PureWealth</span>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#" class="text-sm font-medium hover:text-brand-accent transition-colors">Wealth</a>
+                    <a href="#" class="text-sm font-medium hover:text-brand-accent transition-colors">Yields</a>
+                    <a href="#" class="text-sm font-medium hover:text-brand-accent transition-colors">Portfolio</a>
+                    <a href="#" class="text-sm font-medium hover:text-brand-accent transition-colors">Vault</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" class="p-2 text-brand-text-muted hover:text-brand-text transition-colors">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                </button>
+                <button class="bg-brand-text dark:bg-brand-surface-dark text-white dark:text-brand-text-dark px-6 py-2.5 rounded-2xl text-sm font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all">My Account</button>
+            </div>
+        </nav>
+
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 animate-reveal delay-1">
+            <div class="max-w-xl">
+                <p class="text-brand-accent font-bold tracking-widest text-[10px] uppercase mb-4">Portfolio Strategy</p>
+                <h1 class="text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1]">The art of wealth, <span class="italic text-brand-text-muted font-light">refined.</span></h1>
+            </div>
+            <div class="flex flex-col items-start lg:items-end">
+                <span class="text-4xl font-light">$4,284,500.00</span>
+                <span class="text-brand-success text-sm font-semibold flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    +12.8% YTD Growth
+                </span>
+            </div>
+        </div>
+
+        <div class="bento-grid">
+            
+            <div class="col-span-12 lg:col-span-7 row-span-2 bg-brand-surface dark:bg-brand-surface-dark rounded-[2rem] p-10 border border-brand-border dark:border-brand-border-dark flex flex-col justify-between shadow-sm animate-reveal delay-2 group hover:shadow-2xl transition-all duration-500">
+                <div class="flex justify-between items-start">
+                    <h2 class="text-2xl font-semibold">Yield Performance</h2>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-brand-bg dark:bg-brand-bg-dark border border-brand-border dark:border-brand-border-dark rounded-full text-[10px] font-bold">ALL TIME</span>
+                        <span class="px-3 py-1 bg-brand-text dark:bg-brand-text-dark text-white dark:text-black rounded-full text-[10px] font-bold">2026</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-end gap-3 h-48 md:h-64 pt-10">
+                    <div class="flex-1 bg-brand-bg dark:bg-brand-bg-dark rounded-xl h-[40%] group-hover:h-[60%] transition-all duration-1000 delay-100 relative">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity">JAN</span>
+                    </div>
+                    <div class="flex-1 bg-brand-bg dark:bg-brand-bg-dark rounded-xl h-[55%] group-hover:h-[45%] transition-all duration-1000 delay-200"></div>
+                    <div class="flex-1 bg-brand-bg dark:bg-brand-bg-dark rounded-xl h-[45%] group-hover:h-[75%] transition-all duration-1000 delay-300"></div>
+                    <div class="flex-1 bg-brand-accent rounded-xl h-[85%] relative">
+                        <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-brand-text text-white text-[10px] px-2 py-1 rounded-md font-bold whitespace-nowrap">MAX YIELD</div>
+                    </div>
+                    <div class="flex-1 bg-brand-bg dark:bg-brand-bg-dark rounded-xl h-[70%] group-hover:h-[50%] transition-all duration-1000 delay-500"></div>
+                    <div class="flex-1 bg-brand-bg dark:bg-brand-bg-dark rounded-xl h-[60%] group-hover:h-[80%] transition-all duration-1000 delay-600"></div>
+                </div>
+
+                <div class="flex items-center gap-6 mt-8">
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-brand-accent"></div>
+                        <span class="text-xs font-medium">Realized Yield</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-brand-bg dark:bg-brand-bg-dark"></div>
+                        <span class="text-xs font-medium">Projected</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-12 lg:col-span-5 row-span-1 bg-brand-text dark:bg-white text-white dark:text-brand-text rounded-[2rem] p-8 animate-reveal delay-3 relative overflow-hidden group">
+                <div class="relative z-10 h-full flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-medium mb-1">Asset Allocation</h3>
+                        <p class="text-xs opacity-60">Balanced Conservative Strategy</p>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-3xl font-light">6 Assets</span>
+                        <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center transition-transform group-hover:rotate-45">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path></svg>
+                        </div>
+                    </div>
+                </div>
+                <!-- Abstract Design Decor -->
+                <div class="absolute -bottom-10 -right-10 w-40 h-40 border-8 border-brand-accent/30 rounded-full"></div>
+                <div class="absolute -top-10 -left-10 w-40 h-40 border-8 border-brand-accent/10 rounded-full"></div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-6 lg:col-span-2 row-span-1 bg-brand-surface dark:bg-brand-surface-dark rounded-[2rem] p-8 border border-brand-border dark:border-brand-border-dark animate-reveal delay-4 flex flex-col items-center justify-center text-center hover:shadow-xl transition-all duration-500 cursor-pointer group">
+                <div class="w-12 h-12 rounded-full border border-brand-border dark:border-brand-border-dark flex items-center justify-center mb-4 group-hover:bg-brand-accent group-hover:border-brand-accent transition-all">
+                    <svg class="w-5 h-5 group-hover:text-black transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"></path></svg>
+                </div>
+                <span class="text-[10px] font-bold text-brand-text-muted uppercase tracking-widest">Premium</span>
+                <span class="text-lg font-semibold mt-1">Advisor</span>
+            </div>
+
+            <div class="col-span-12 sm:col-span-6 lg:col-span-3 row-span-1 bg-brand-surface dark:bg-brand-surface-dark rounded-[2rem] p-8 border border-brand-border dark:border-brand-border-dark animate-reveal delay-5 flex flex-col justify-between hover:shadow-xl transition-all duration-500 cursor-pointer">
+                <div>
+                    <span class="text-xs font-semibold text-brand-text-muted">Total Dividends</span>
+                    <h4 class="text-2xl font-semibold mt-1">$12,450.40</h4>
+                </div>
+                <div class="h-1 w-full bg-brand-bg dark:bg-brand-bg-dark rounded-full overflow-hidden mt-4">
+                    <div class="h-full bg-brand-accent w-2/3"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        if (document.documentElement.classList.contains('dark')) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        var themeToggleBtn = document.getElementById('theme-toggle');
+
+        themeToggleBtn.addEventListener('click', function() {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>
