@@ -31,29 +31,35 @@ Generic AI prompts lead to "default" looks. `SKILL.md` injects professional desi
 ## 🗂️ The Collection
 *Standardized grid previews. Click any card to explore the design DNA.*
 
-### 💰 Finance & Wealth
-*Sophisticated, trustworthy, and high-performance.*
+<details open>
+<summary><b>💰 Finance & Wealth</b> — <i>Sophisticated and high-performance.</i></summary>
+<br>
 
-| [![Aegis Glow](skills/aegis-glow/cover.png)](skills/aegis-glow/) | [![PureWealth](skills/purewealth/cover.png)](skills/purewealth/) | [![AuraWealth](skills/aurawealth/cover.png)](skills/aurawealth/) |
+| <a href="skills/aegis-glow/"><img src="skills/aegis-glow/cover.png" height="120" /></a> | <a href="skills/purewealth/"><img src="skills/purewealth/cover.png" height="120" /></a> | <a href="skills/aurawealth/"><img src="skills/aurawealth/cover.png" height="120" /></a> |
 | :---: | :---: | :---: |
 | [**Aegis Glow**](skills/aegis-glow/) | [**PureWealth**](skills/purewealth/) | [**AuraWealth**](skills/aurawealth/) |
 | *Obsidian Fintech* | *Warm Minimalist* | *Organic FinTech* |
+</details>
 
-### 🛠️ Productivity & Admin
-*Structured, efficient, and data-dense.*
+<details open>
+<summary><b>🛠️ Productivity & Admin</b> — <i>Structured and data-dense.</i></summary>
+<br>
 
-| [![ForgeUI](skills/forge-ui/cover.png)](skills/forge-ui/) | [![FluxBoard](skills/fluxboard/cover.png)](skills/fluxboard/) | [![Quantify](skills/quantify/cover.png)](skills/quantify/) |
+| <a href="skills/forge-ui/"><img src="skills/forge-ui/cover.png" height="120" /></a> | <a href="skills/fluxboard/"><img src="skills/fluxboard/cover.png" height="120" /></a> | <a href="skills/quantify/"><img src="skills/quantify/cover.png" height="120" /></a> |
 | :---: | :---: | :---: |
 | [**ForgeUI**](skills/forge-ui/) | [**FluxBoard**](skills/fluxboard/) | [**Quantify**](skills/quantify/) |
 | *Developer IDE* | *Bento Kanban* | *Data Analytics* |
+</details>
 
-### 🚀 Future-Forward SaaS
-*Modern, vibrant, and experimental.*
+<details open>
+<summary><b>🚀 Future-Forward SaaS</b> — <i>Modern and experimental.</i></summary>
+<br>
 
-| [![Nova AI](skills/nova-ai/cover.png)](skills/nova-ai/) | [![Ecovolt](skills/ecovolt/cover.png)](skills/ecovolt/) | [![Big Shaped](skills/big-shaped/cover.png)](skills/big-shaped/) |
+| <a href="skills/nova-ai/"><img src="skills/nova-ai/cover.png" height="120" /></a> | <a href="skills/ecovolt/"><img src="skills/ecovolt/cover.png" height="120" /></a> | <a href="skills/big-shaped/"><img src="skills/big-shaped/cover.png" height="120" /></a> |
 | :---: | :---: | :---: |
 | [**Nova AI**](skills/nova-ai/) | [**Ecovolt**](skills/ecovolt/) | [**Big Shaped**](skills/big-shaped/) |
 | *Soft-Glass AI* | *Eco-Brutalist* | *Architectural* |
+</details>
 
 <div align="center">
   <br />
