@@ -2,7 +2,7 @@
 
 The largest open-source registry of AI-ready design systems. Drop a `SKILL.md` into your project and give your AI coding agent pixel-perfect design DNA.
 
-[![Skills](https://img.shields.io/badge/skills-4-blue)](skills/)
+[![Skills](https://img.shields.io/badge/skills-5-blue)](skills/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
@@ -71,6 +71,9 @@ cp skills/forge-ui/SKILL.md ./SKILL.md
 
 ### AI & ML
 - [**Nova AI**](skills/nova-ai/) - Radiant Soft-Glass AI. Airy SaaS interfaces with sunburst gradients, floating 3D glassmorphic cards, and warm AI Spark accents.
+
+### Design System
+- [**Big Shaped**](skills/big-shaped/) - Dramatic design system. High-contrast animated interfaces with neon accents, abstract 3D gradients, and fluid animations.
 
 ### More Coming Soon
 We're actively adding new design systems. [Request one](https://github.com/Samyk000/skillshelf-OpenDesign/issues/new?template=request-skill.yml) or [contribute your own](CONTRIBUTING.md).

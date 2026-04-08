@@ -19,6 +19,7 @@ Browse our collection of AI-ready design systems. Each folder contains a complet
 | [Aegis Glow](./aegis-glow/) | Fintech | ✅ Complete |
 | [Ecovolt](./ecovolt/) | Clean Tech | ✅ Complete |
 | [Nova AI](./nova-ai/) | AI & ML | ✅ Complete |
+| [Big Shaped](./big-shaped/) | Design System | ✅ Complete |
 
 ## ➕ Add a Skill
 
