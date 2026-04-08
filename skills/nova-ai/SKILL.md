@@ -1,8 +1,11 @@
+<!-- SkillShelf_START -->
 # Radiant Soft-Glass AI Design System Skill (Universal)
 
-## 1. Visual Theme & Atmosphere
-You are an expert design-system guideline author for the Radiant Soft-Glass AI UI. Create practical, implementation-ready code that builds airy, consumer-friendly, full-fledged SaaS interfaces. 
-The aesthetic is characterized by a central "sunburst" radiant gradient background, floating 3D-like glassmorphic UI cards, thick app-like viewport frames, and a highly rounded, approachable design language. It uses a signature warm "AI Spark" gradient (pink to orange) to highlight intelligent features.
+## Mission
+Create practical, implementation-ready code that builds airy, consumer-friendly, full-fledged SaaS interfaces.
+
+## Brand
+Radiant Soft-Glass AI UI. The aesthetic is characterized by a central "sunburst" radiant gradient background, floating 3D-like glassmorphic UI cards, thick app-like viewport frames, and a highly rounded, approachable design language. It uses a signature warm "AI Spark" gradient (pink to orange) to highlight intelligent features.
 
 **Key Characteristics:**
 - **App Frame:** The main viewport has a thick solid border (white in light mode, deep black in dark mode) acting as a device frame, wrapping a `rounded-[3rem]` inner radiant background.
@@ -10,7 +13,7 @@ The aesthetic is characterized by a central "sunburst" radiant gradient backgrou
 - **Comprehensive Structure:** Always generate full pages (Nav, Hero, Feature Bento Grids, Pricing, Footer) rather than just single snippets.
 - **Soft Shadows:** Avoid harsh lines; rely on soft, diffuse drop shadows to lift elements off the page.
 
-## 2. Color Palette & Roles
+## Style Foundations
 
 ### Base & Surfaces
 - **Outer Frame**: Light `#FFFFFF` | Dark `#020617`
@@ -38,7 +41,7 @@ The aesthetic is characterized by a central "sunburst" radiant gradient backgrou
 | Card Title | `font-sans` | 1.5rem (`text-2xl`) | 700 (`font-bold`) | 1.2 | Normal |
 | UI Label | `font-sans` | 0.875rem (`text-sm`) | 600 (`font-semibold`) | 1.5 | Normal |
 
-## 4. Component Stylings & Depth
+## Component Families
 
 ### Buttons & CTAs
 - **Primary CTA**: Fully rounded (`rounded-full`), deep contrast (Black in light mode, White in dark mode), firm shadow. Hover states slightly lift (`-translate-y-1`).
@@ -55,26 +58,27 @@ The aesthetic is characterized by a central "sunburst" radiant gradient backgrou
 - **Gradients**: Use `text-transparent bg-clip-text bg-gradient-to-r` to highlight specific magic words in headings.
 - **Icons**: Emphasize AI features with a tiny rotating "spark" SVG icon colored with the AI Spark Gradient.
 
-## 5. Layout Principles & Grids
+## Expected Behavior
 
 - **Full-Fledged Delivery:** Ensure output contains a complete page narrative. Hero -> Logo Cloud -> Features (Bento Grid) -> Pricing -> Footer.
 - **Central Alignment:** Hero sections are strictly center-aligned (`items-center text-center`) to draw the eye down into the floating card composition.
 - **Mobile-First Safety:** Absolute positioned floating cards in the Hero MUST be hidden on mobile (`hidden md:flex`) to prevent breaking the viewport and causing horizontal scrolling.
 - **Framed Canvas:** The `body` should wrap its content in a padded container (`p-2 sm:p-4`) containing a `min-h-screen` inner div with the `radiant-bg` and thick borders.
 
-## 6. Accessibility & Theming
+## Accessibility
 
 - **Theme Toggling:** Implement Javascript to toggle the `dark` class on the `<html>` root.
 - **Background Shift:** The sunburst radiant background MUST transition from light, airy pastels (blue to peach) to deep, cosmic night colors (slate to deep indigo).
 - **Contrast Check:** WCAG 2.2 AA. The floating cards must contrast strongly with the radiant background. Do not use pure black for cards in dark mode; use `#1E293B` to maintain the soft aesthetic. Ensure the AI gradient text is legible in both modes.
 
-## 7. Do's and Don'ts
+## Rules: Do
+- populate Feature Cards with mini-UI mockups.
+- use `backdrop-blur` on top navigation bars.
+- use `text-balance` on large headings.
 
-- **Do** populate Feature Cards with mini-UI mockups (tiny progress bars, charts, chat bubbles) rather than just text to keep the aesthetic data-dense.
-- **Do** use `backdrop-blur` on top navigation bars and theme toggles so the radiant background shines through softly.
-- **Do** use `text-balance` on large headings to ensure elegant wrapping.
-- **Don't** use sharp corners (`rounded-none` or `rounded-md`) on structural cards. The soft aesthetic demands massive radii (`rounded-3xl` minimum).
-- **Don't** generate single-section snippets. Always deliver full, scrolling pages.
+## Rules: Don't
+- avoid sharp corners (`rounded-none` or `rounded-md`).
+- avoid single-section snippets; deliver full pages.
 
 ## 8. Agent Prompt Guide
 *Self-Prompting Examples for Universal Generation:*
@@ -86,3 +90,5 @@ The aesthetic is characterized by a central "sunburst" radiant gradient backgrou
 - **Hard Rule 1:** Did I build a full-fledged page with multiple sections (Hero, Features, Pricing, Footer)?
 - **Hard Rule 2:** Does the main container have the thick outer frame and highly rounded inner corners (`rounded-[3rem]`)?
 - **Hard Rule 3:** Are the absolute-positioned floating cards hidden on mobile (`hidden md:flex`) to prevent horizontal scrolling?
+
+<!-- SkillShelf_END -->

@@ -2,7 +2,7 @@
 
 The largest open-source registry of AI-ready design systems. Drop a `SKILL.md` into your project and give your AI coding agent pixel-perfect design DNA.
 
-[![Skills](https://img.shields.io/badge/skills-4-blue)](skills/)
+[![Skills](https://img.shields.io/badge/skills-5-blue)](skills/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
@@ -56,7 +56,7 @@ cp skills/forge-ui/SKILL.md ./SKILL.md
 ```
 
 ## 📥 Request a Skill
-[Open a GitHub issue with this template](https://github.com/Samyk000/skillshelf-OpenDesign/issues/new?template=request-skill.yml) to request a `SKILL.md` generation for a website.
+[Open a GitHub issue with this template](https://github.com/Samyk000/skillshelf-os/issues/new?template=request-skill.yml) to request a `SKILL.md` generation for a website.
 
 ## 🗂️ Collection
 
@@ -76,7 +76,7 @@ cp skills/forge-ui/SKILL.md ./SKILL.md
 - [**Big Shaped**](skills/big-shaped/) - Big Shaped design system. Stark architectural typography meets organic softness with neon lime accents and floating glassmorphic overlays.
 
 ### More Coming Soon
-We're actively adding new design systems. [Request one](https://github.com/Samyk000/skillshelf-OpenDesign/issues/new?template=request-skill.yml) or [contribute your own](CONTRIBUTING.md).
+We're actively adding new design systems. [Request one](https://github.com/Samyk000/skillshelf-os/issues/new?template=request-skill.yml) or [contribute your own](CONTRIBUTING.md).
 
 ## 🤝 Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
@@ -85,7 +85,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 - **Improve existing files**: Fix wrong colors, missing tokens, weak descriptions
 - **Report issues**: Let us know if something looks off
 
-Before opening a PR, please [open an issue](https://github.com/Samyk000/skillshelf-OpenDesign/issues) first to discuss your idea and get feedback from maintainers.
+Before opening a PR, please [open an issue](https://github.com/Samyk000/skillshelf-os/issues) first to discuss your idea and get feedback from maintainers.
 
 ## 🌐 Hosted Version
 Want a visual browser, likes, saves, and premium skills? Try the full **Skillshelf** app at [skillshelf-liart.vercel.app](https://skillshelf-liart.vercel.app).

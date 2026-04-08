@@ -1,8 +1,11 @@
+<!-- SkillShelf_START -->
 # Obsidian Glow Fintech Design System Skill (Universal)
 
-## 1. Visual Theme & Atmosphere
-You are an expert design-system guideline author for the Obsidian Glow Fintech UI. Create practical, full-fledged, implementation-ready code that builds highly premium, metallic, and institutional financial interfaces. 
-The aesthetic is luxurious and deeply textured. It utilizes cinematic lighting effects (sharp diagonal flares, intense edge glows) in copper, rust, and bright orange. It features floating glassmorphic compositions, clean typography, and minimalist background textures (like circuitry). It feels wealthy, secure, and technologically advanced.
+## Mission
+Create practical, full-fledged, implementation-ready code that builds highly premium, metallic, and institutional financial interfaces.
+
+## Brand
+Obsidian Glow Fintech UI. The aesthetic is luxurious and deeply textured. It utilizes cinematic lighting effects in copper, rust, and bright orange. It feels wealthy, secure, and technologically advanced.
 
 **Key Characteristics:**
 - **Dual-Theme Parity:** The dark theme features deep blacks (`#09090B`) with glowing copper shadows. The light theme features an ultra-premium "Alabaster" off-white (`#F5F5F7`) with crisp white cards (`#FFFFFF`) and softer, warmer lens flares.
@@ -10,7 +13,7 @@ The aesthetic is luxurious and deeply textured. It utilizes cinematic lighting e
 - **Flat-Scaled Layering:** Instead of steep 3D rotations, hero graphics overlap cards by scaling background elements (`scale-90`) and offsetting them along the X and Y axes, creating a tight, precise stack.
 - **Intense Edge Lighting:** Premium/Highlighted cards feature intense, concentrated glow effects at their base, simulating a strong under-light.
 
-## 2. Color Palette & Roles
+## Style Foundations
 
 ### Base & Surfaces
 - **App Background**: Dark `#09090B` | Light `#F5F5F7`
@@ -38,7 +41,7 @@ The aesthetic is luxurious and deeply textured. It utilizes cinematic lighting e
 | Body Text | `font-sans` | 1rem (`text-base`) | 500 (`font-medium`) | 1.6 | Normal |
 | Labels/Headers | `font-sans` | 0.75rem (`text-xs`) | 600 (`font-semibold`) | 1.5 | `tracking-wider`, `uppercase` |
 
-## 4. Component Stylings & Depth
+## Component Families
 
 ### Buttons & Inputs
 - **Primary CTA**: `rounded-full`, high contrast, `font-semibold`. In Light mode, use black with white text. In Dark mode, use white with black text.
@@ -55,25 +58,26 @@ The aesthetic is luxurious and deeply textured. It utilizes cinematic lighting e
 - Ensure light beams adapt to Light Mode: they should become soft, warm peach/orange overlays rather than stark white flares.
 - Use a circuit pattern background (`circuit-bg`) generated via CSS linear-gradients masked with a radial gradient.
 
-## 5. Layout Principles & Grids
+## Expected Behavior
 
 - **Full-Fledged Delivery:** Ensure output contains a complete page narrative. Nav -> Hero (with precise layered cards) -> Logo Cloud -> Features Dashboard Snippets -> Pricing Cards -> Comparison Table -> Footer.
 - **Flat-Scaled Layering:** When creating 3D card stacks, use `translate-x` and `translate-y` with `scale-90` to overlap cards cleanly.
 - **Comparison Tables:** Minimalist design. Only horizontal borders (`border-b`). Clean, generous padding (`py-4`). Left-aligned features, center/left-aligned checks/data. Include top headers with styled pricing card summaries.
 
-## 6. Accessibility & Theming
+## Accessibility
 
 - **Theme Toggling:** Implement Javascript to toggle the `dark` class on the `<html>` root.
 - **Light Mode Adaptation:** Dark surfaces become crisp white (`#FFFFFF`), glowing copper shadows become soft gray drop-shadows (`shadow-card-soft`), and white text becomes deep gray (`#111827`).
 - **Contrast Check:** WCAG 2.2 AA. Use `text-gray-500` or `text-white/70` for muted text, ensuring it is legible against its respective background.
 
-## 7. Do's and Don'ts
+## Rules: Do
+- use `backdrop-blur` heavily on overlapping elements.
+- build small UI mockups inside feature section floating cards.
+- maintain the dark styling of the Premium pricing card globally.
 
-- **Do** use `backdrop-blur` heavily on overlapping elements to create a glassmorphic effect against the glowing backgrounds.
-- **Do** build small UI mockups (like a transfer screen or an SVG wave chart) inside the feature section floating cards.
-- **Do** maintain the dark, rich styling of the "Premium" pricing card even when the user switches to Light Mode. It anchors the design.
-- **Don't** use 3D skewing or rotation for the hero credit cards; keep them flat but scaled/translated to mimic a physical stack.
-- **Don't** use bright primary colors (pure blue, bright green). Stick to the sophisticated metallic palette (copper, rust, gold, grayscale).
+## Rules: Don't
+- avoid 3D skewing or rotation for hero credit cards.
+- avoid bright primary colors (pure blue, bright green).
 
 ## 8. Agent Prompt Guide
 *Self-Prompting Examples for Universal Generation:*
@@ -84,3 +88,5 @@ The aesthetic is luxurious and deeply textured. It utilizes cinematic lighting e
 - **Hard Rule 1:** Did I build a full-fledged page with multiple sections (Hero, Features, Pricing, Table, Footer) rather than a single snippet?
 - **Hard Rule 2:** Is the Light Theme correctly implemented using an off-white background (`#F5F5F7`) and crisp white (`#FFFFFF`) cards, preventing a "muddy" or flat look?
 - **Hard Rule 3:** Does the Premium Pricing card utilize the intense, blurred bottom-edge glow effect?
+
+<!-- SkillShelf_END -->

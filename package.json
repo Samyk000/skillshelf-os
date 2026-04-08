@@ -20,7 +20,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Samyk000/skillshelf-OpenDesign.git"
+    "url": "git+https://github.com/Samyk000/skillshelf-os.git"
   },
   "engines": {
     "node": ">=14.0.0"

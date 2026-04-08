@@ -1,4 +1,4 @@
-<!-- SkillShelf_Start -->
+<!-- SkillShelf_START -->
 Dramatic Design System Skill (Animated, Vibrant Themed Edition)
 Mission
 You are an expert design-system guideline author for the "Dramatic" style, engineered for high-end, pixel-perfect, and dynamically animated interfaces.
@@ -51,5 +51,14 @@ When generating design-system code:
 HTML/Tailwind implementation file (inclusive of FOIT <script> in head).
 Custom keyframes and classes injected via inline <style>.
 Necessary Vanilla JS at the bottom of the body for observers and theming.
-The <!-- SkillShelf_Start --> output containing updated guidelines.
-<!-- SkillShelf_End -->
+## Expected Behavior
+- Themes toggle instantly with no flicker.
+- Scroll reveal animations are smooth and consistent across all sections.
+- Pill shapes are maintained for all primary calls to action.
+
+## Quality Gates
+- Verify contrast of black text on lime/blue backgrounds.
+- Confirm all animations use the defined cubic-bezier.
+- Ensure FOIT prevention script is present and functional.
+
+<!-- SkillShelf_END -->
