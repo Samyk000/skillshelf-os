@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>🎨 Skillshelf Open Design</h1>
+  <h1>🎨 Skillshelf Open-Source</h1>
   <p><b>The ultimate DNA sequence for your AI coding agents.</b></p>
   <p>Standardized, LLM-optimized design systems that turn generic AI output into professional products.</p>
 
