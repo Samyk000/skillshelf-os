@@ -1,0 +1,47 @@
+name: Request a New Design Skill
+description: Suggest a new design system to be added to the registry
+title: "[Request] [Brand/Website Name]"
+labels: "enhancement, skill-request"
+assignees: ""
+
+body:
+  - type: input
+    id: brand
+    attributes:
+      label: Brand / Website
+      description: Which website's design system should we capture?
+      placeholder: "e.g., Linear, Vercel, Stripe"
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: Link to the website
+      placeholder: "https://example.com"
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this design?
+      description: What makes this design system notable or unique?
+      placeholder: "Explain what makes this design special..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
+      description: Any specific aspects you'd like to see captured?
+      placeholder: "Specific components, colors, interactions..."
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        **Note**: Requests are prioritized by community interest. If you can contribute, see [CONTRIBUTING.md](CONTRIBUTING.md).

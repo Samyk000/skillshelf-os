@@ -1,0 +1,54 @@
+name: Improve Existing Skill
+description: Report issues or suggest improvements to an existing SKILL.md file
+title: "[Improve] [Skill Name] - [Brief Description]"
+labels: "bug, enhancement"
+assignees: ""
+
+body:
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Skill
+      description: Which skill needs improvement?
+      options:
+        - forge-ui
+      placeholder: "Select a skill"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Issue Type
+      options:
+        - Missing design tokens
+        - Incorrect colors/typography
+        - Incomplete component rules
+        - Accessibility issues
+        - Preview HTML enhancement
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs to be fixed or improved? Provide specific details.
+      placeholder: "The color palette section is missing semantic tokens..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Changes
+      description: How should this be corrected?
+      placeholder: "Add CSS variables for light mode...\nUpdate spacing scale to include 8px step..."
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        **Thank you for helping improve the registry!** PRs are welcome and encouraged.
