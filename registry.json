@@ -169,6 +169,61 @@
         "preview": "preview.html",
         "cover": "cover.png"
       }
+    },
+    {
+      "slug": "voxai",
+      "title": "VoxAI",
+      "category": "AI & SaaS",
+      "tags": [
+        "ai",
+        "glassmorphism",
+        "ethereal",
+        "dark",
+        "light",
+        "saas"
+      ],
+      "description": "Ethereal SaaS Design. Atmospheric ambient backgrounds with stark, highly-structured foreground elements and AI-centric enterprise interfaces.",
+      "files": {
+        "skill": "SKILL.md",
+        "preview": "preview.html",
+        "cover": "cover.png"
+      }
+    },
+    {
+      "slug": "epoch",
+      "title": "Epoch",
+      "category": "Premium SaaS",
+      "tags": [
+        "brutalist",
+        "neon",
+        "dark",
+        "high-contrast",
+        "saas"
+      ],
+      "description": "Neon Brutalist SaaS Design. High-contrast, vibrant, and energetic design with massive typography and neon accents.",
+      "files": {
+        "skill": "SKILL.md",
+        "preview": "preview.html",
+        "cover": "cover.png"
+      }
+    },
+    {
+      "slug": "synthetix",
+      "title": "Synthetix",
+      "category": "Productivity & Workspace",
+      "tags": [
+        "brutalist",
+        "editorial",
+        "bento",
+        "dark",
+        "typography"
+      ],
+      "description": "Editorial Brutalist Design. High-end, stark marketing pages that prioritize massive typography, stark contrasts, and bento-box layouts.",
+      "files": {
+        "skill": "SKILL.md",
+        "preview": "preview.html",
+        "cover": "cover.png"
+      }
     }
   ]
 }

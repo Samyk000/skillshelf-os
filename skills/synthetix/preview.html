@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthetix - Workflows Made Brilliant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            bg: '#141414',
+                            text: '#F5F5F5',
+                            muted: '#A3A3A3',
+                            accent: '#FF7D54', // The salmon/orange
+                            appBg: '#1C1C1C',
+                            appSidebar: '#181818'
+                        }
+                    },
+                    letterSpacing: {
+                        tighter: '-.04em',
+                        tight: '-.02em',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #141414;
+            color: #F5F5F5;
+            overflow-x: hidden;
+        }
+
+        /* Scroll Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Custom App UI Bar Chart Simulation */
+        .bar {
+            width: 10px;
+            background: linear-gradient(to top, #FF7D54, #FFB347);
+            border-radius: 4px 4px 0 0;
+            display: inline-block;
+            margin: 0 4px;
+        }
+
+        /* Circular Progress Simulation */
+        .progress-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(#FF7D54 0% 65%, #333 65% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .progress-inner {
+            width: 64px;
+            height: 64px;
+            background-color: #1C1C1C;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen selection:bg-brand-accent selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="flex flex-col md:flex-row items-center justify-between px-6 md:px-12 py-8 reveal active">
+        
+        <!-- Left: Logo & Email -->
+        <div class="flex items-center gap-4 mb-6 md:mb-0 w-full md:w-auto justify-between md:justify-start">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white hover:rotate-90 transition-transform duration-500 cursor-pointer">
+                <line x1="12" y1="2" x2="12" y2="22"></line>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                <line x1="4.93" y1="19.07" x2="19.07" y2="4.93"></line>
+            </svg>
+            <div class="flex items-center gap-4">
+                <span class="text-brand-muted text-xl font-light">/</span>
+                <a href="#" class="text-sm font-medium hover:text-brand-accent transition-colors">support@synthetix.io</a>
+            </div>
+        </div>
+
+        <!-- Center: Links -->
+        <div class="hidden lg:flex items-center gap-4 text-sm font-medium text-brand-muted">
+            <a href="#" class="hover:text-white transition-colors">Workflows</a>
+            <span class="text-[10px]">•</span>
+            <a href="#" class="hover:text-white transition-colors">Data</a>
+            <span class="text-[10px]">•</span>
+            <a href="#" class="hover:text-white transition-colors">Platform</a>
+            <span class="text-[10px]">•</span>
+            <a href="#" class="hover:text-white transition-colors">Pricing</a>
+        </div>
+
+        <!-- Right: Actions -->
+        <div class="flex items-center gap-6 hidden md:flex">
+            <div class="flex items-center gap-1.5 text-sm font-medium cursor-pointer hover:text-brand-accent transition-colors">
+                En
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            </div>
+            <a href="#" class="text-sm font-medium hover:text-brand-accent transition-colors">Login</a>
+            <a href="#" class="text-sm font-medium border border-white/30 rounded-full px-6 py-2.5 hover:bg-white hover:text-black transition-all flex items-center gap-2 group">
+                Download
+                <svg class="w-4 h-4 transform group-hover:translate-x-1 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-[1400px] mx-auto px-6 md:px-12 pb-24">
+        
+        <!-- Hero Section -->
+        <section class="mt-12 md:mt-24 mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
+            
+            <div class="max-w-2xl reveal">
+                <h1 class="text-6xl md:text-7xl lg:text-[5.5rem] font-medium leading-[1.05] tracking-tighter">
+                    Workflows <span class="font-light">`</span>Made<br>Brilliant<span class="font-light text-brand-accent">^</span>
+                </h1>
+            </div>
+
+            <div class="flex items-center gap-8 reveal delay-100 pb-4">
+                <span class="text-4xl text-brand-muted font-light hidden sm:block">/</span>
+                <div class="flex items-center gap-6">
+                    <p class="text-sm font-medium text-brand-muted max-w-[180px] leading-relaxed">
+                        Seamlessly Orchestrate Your Team's Output
+                    </p>
+                    <a href="#" class="bg-brand-accent text-black font-semibold rounded-full px-8 py-3.5 hover:bg-brand-accent/90 hover:scale-105 transition-all flex items-center gap-2">
+                        Start
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7-7m7-7H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bento Grid Layout -->
+        <section class="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-6 mb-24 h-auto lg:h-[600px]">
+            
+            <!-- Left: App Representation -->
+            <div class="bg-brand-accent rounded-[2rem] p-4 lg:p-6 reveal delay-200 h-[500px] lg:h-full relative overflow-hidden group cursor-pointer">
+                <!-- Inner App Box -->
+                <div class="bg-brand-appBg w-full h-full rounded-[1.5rem] border border-white/10 shadow-2xl flex overflow-hidden transform transition-transform duration-700 group-hover:scale-[1.02]">
+                    
+                    <!-- App Sidebar (Hidden on small mobile) -->
+                    <div class="hidden sm:flex w-[180px] bg-brand-appSidebar flex-col py-6 px-4 border-r border-white/5">
+                        <div class="text-white font-semibold text-lg mb-8 tracking-tight">Synthetix</div>
+                        
+                        <div class="bg-brand-accent/10 text-brand-accent text-xs font-medium px-4 py-2.5 rounded-lg flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                            Overview
+                        </div>
+                        <div class="text-brand-muted text-xs font-medium px-4 py-2.5 rounded-lg flex items-center gap-2 hover:bg-white/5 cursor-pointer mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            Tasks
+                        </div>
+                        <div class="text-brand-muted text-xs font-medium px-4 py-2.5 rounded-lg flex items-center gap-2 hover:bg-white/5 cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                            Messages
+                        </div>
+
+                        <div class="mt-auto">
+                            <div class="text-brand-muted text-xs font-medium px-4 py-2.5 flex items-center gap-2">
+                                <img src="https://i.pravatar.cc/100?img=33" class="w-6 h-6 rounded-full" alt="User">
+                                Settings
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App Main Area -->
+                    <div class="flex-1 flex flex-col p-6 lg:p-8">
+                        
+                        <!-- App Header -->
+                        <div class="flex justify-between items-center mb-8">
+                            <div class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 flex items-center gap-2 w-[200px]">
+                                <svg class="w-4 h-4 text-brand-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <span class="text-brand-muted text-xs">Search...</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button class="bg-brand-accent text-black text-xs font-bold px-4 py-2 rounded-lg flex items-center gap-1">
+                                    + New
+                                </button>
+                                <img src="https://i.pravatar.cc/100?img=68" class="w-8 h-8 rounded-full border border-white/20" alt="Profile">
+                            </div>
+                        </div>
+
+                        <!-- App Greeting -->
+                        <div class="text-center mb-10">
+                            <p class="text-brand-muted text-xs mb-1">Monday, 24th October</p>
+                            <h2 class="text-2xl font-medium tracking-tight">Good Morning, Alex,</h2>
+                        </div>
+
+                        <!-- App Stats Grid -->
+                        <div class="grid grid-cols-3 gap-4 mb-8">
+                            <div class="bg-white/5 border border-white/5 rounded-xl p-4 flex flex-col items-center justify-center">
+                                <span class="text-brand-muted text-[10px] uppercase tracking-wider mb-2">Hours Saved</span>
+                                <span class="text-2xl font-light">18<span class="text-sm text-brand-muted">hrs</span></span>
+                            </div>
+                            <div class="bg-white/5 border border-white/5 rounded-xl p-4 flex flex-col items-center justify-center">
+                                <span class="text-brand-muted text-[10px] uppercase tracking-wider mb-2">Completed</span>
+                                <span class="text-2xl font-light">32</span>
+                            </div>
+                            <div class="bg-white/5 border border-white/5 rounded-xl p-4 flex flex-col items-center justify-center">
+                                <span class="text-brand-muted text-[10px] uppercase tracking-wider mb-2">In Progress</span>
+                                <span class="text-2xl font-light">5</span>
+                            </div>
+                        </div>
+
+                        <!-- App Charts Area -->
+                        <div class="grid grid-cols-2 gap-4 flex-1">
+                            <!-- Fake Bar Chart -->
+                            <div class="bg-white/5 border border-white/5 rounded-xl p-5 flex flex-col justify-end">
+                                <div class="flex justify-between items-start mb-auto">
+                                    <span class="text-sm font-medium">Activity</span>
+                                    <span class="text-xs text-brand-muted">This Week</span>
+                                </div>
+                                <div class="flex items-end justify-between h-[80px] px-2 mt-4">
+                                    <div class="bar h-[40%]"></div>
+                                    <div class="bar h-[60%]"></div>
+                                    <div class="bar h-[30%]"></div>
+                                    <div class="bar h-[80%]"></div>
+                                    <div class="bar h-[50%]"></div>
+                                    <div class="bar h-[90%]"></div>
+                                    <div class="bar h-[70%]"></div>
+                                </div>
+                                <div class="flex justify-between text-[8px] text-brand-muted mt-2 px-3">
+                                    <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Fake Donut Chart -->
+                            <div class="bg-white/5 border border-white/5 rounded-xl p-5 flex items-center justify-between">
+                                <div>
+                                    <div class="text-sm font-medium mb-1">Task Status</div>
+                                    <div class="flex flex-col gap-2 mt-4">
+                                        <div class="flex items-center gap-2 text-[10px] text-brand-muted">
+                                            <div class="w-2 h-2 rounded-full bg-brand-accent"></div> Pending
+                                        </div>
+                                        <div class="flex items-center gap-2 text-[10px] text-brand-muted">
+                                            <div class="w-2 h-2 rounded-full bg-[#333]"></div> Done
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-ring">
+                                    <div class="progress-inner">
+                                        <span class="text-lg font-bold">18</span>
+                                        <span class="text-[8px] text-brand-muted">of 28</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Photographic Image -->
+            <div class="rounded-[2rem] overflow-hidden reveal delay-300 h-[400px] lg:h-full relative group">
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80" alt="Smiling Woman" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+            </div>
+
+        </section>
+
+        <!-- Logos Section -->
+        <section class="flex flex-wrap justify-between items-center gap-8 md:gap-12 opacity-60 mb-24 px-4 reveal">
+            <!-- Simulated Logos using text for safety/simplicity, styling to look like logos -->
+            <div class="text-xl font-bold tracking-tighter">Stripe</div>
+            <div class="text-xl font-bold tracking-tight flex items-center gap-1"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg>Spotify</div>
+            <div class="text-xl font-semibold tracking-wide">asana</div>
+            <div class="text-xl font-bold tracking-tighter uppercase text-red-500/80">Netflix</div>
+            <div class="text-xl font-bold tracking-tight flex items-center gap-1"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2z"></path></svg> slack</div>
+        </section>
+
+        <!-- Statement Section -->
+        <section class="max-w-4xl mb-32 reveal">
+            <h2 class="text-4xl md:text-5xl lg:text-[3.5rem] font-medium leading-[1.15] tracking-tight">
+                To accelerate the scale of your Operations, it's vital to streamline the delivery of new pipelines.
+            </h2>
+        </section>
+
+        <!-- Testimonial Section -->
+        <section class="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-16 border-t border-white/10 pt-12 reveal">
+            
+            <!-- Avatars -->
+            <div class="flex -space-x-4">
+                <div class="w-16 h-16 rounded-full border-2 border-[#141414] bg-brand-accent p-1">
+                    <img src="https://i.pravatar.cc/100?img=11" class="w-full h-full rounded-full object-cover grayscale" alt="User">
+                </div>
+                <div class="w-16 h-16 rounded-full border-2 border-[#141414] bg-blue-500/20 p-1">
+                    <img src="https://i.pravatar.cc/100?img=12" class="w-full h-full rounded-full object-cover grayscale" alt="User">
+                </div>
+                <div class="w-16 h-16 rounded-full border-2 border-[#141414] bg-white/10 p-1">
+                    <img src="https://i.pravatar.cc/100?img=5" class="w-full h-full rounded-full object-cover grayscale" alt="User">
+                </div>
+            </div>
+
+            <!-- Slash Divider -->
+            <span class="text-4xl text-brand-muted font-light hidden md:block">/</span>
+
+            <!-- Quote -->
+            <div class="max-w-md">
+                <p class="text-lg md:text-xl font-medium leading-relaxed mb-4 text-white/90">
+                    "We managed an incredible volume of tasks in a 1-week sprint timeframe!"
+                </p>
+                <p class="text-sm text-brand-muted">
+                    <span class="font-bold text-white">Sarah, Product Lead</span> @Meta
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Simple Intersection Observer for Animations -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); // Run once
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach((element) => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoxAI - Intelligence in Every Conversation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            900: '#0B0D14', // Deepest background
+                            800: '#141824', // Card background dark
+                            700: '#1E2436', // Hover states
+                            accent: '#3B82F6' // Primary action
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            overflow-x: hidden; 
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Smooth, global transitions for theme changes */
+        *, *::before, *::after {
+            transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        /* Stop text color transitions from looking muddy */
+        h1, h2, h3, p, span, a, svg {
+            transition: color 0.2s ease, opacity 0.4s ease;
+        }
+
+        /* Ambient Glow System */
+        .glow-orb-1 {
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%);
+        }
+        .glow-orb-2 {
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, rgba(0,0,0,0) 70%);
+        }
+        
+        html.dark .glow-orb-1 {
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0,0,0,0) 70%);
+        }
+        html.dark .glow-orb-2 {
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, rgba(0,0,0,0) 70%);
+        }
+
+        /* Glassy Button */
+        .btn-glass {
+            background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 24px -4px rgba(0,0,0,0.4);
+            color: white;
+        }
+        html:not(.dark) .btn-glass {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 1) 100%);
+            border: 1px solid rgba(15, 23, 42, 1);
+            box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.3);
+            color: white;
+        }
+
+        .delay-100 { animation-delay: 100ms; opacity: 0; }
+        .delay-200 { animation-delay: 200ms; opacity: 0; }
+        .delay-300 { animation-delay: 300ms; opacity: 0; }
+        .delay-400 { animation-delay: 400ms; opacity: 0; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 dark:bg-brand-900 text-slate-900 dark:text-white">
+
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] glow-orb-1 blur-[80px] rounded-full"></div>
+        <div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] glow-orb-2 blur-[100px] rounded-full"></div>
+    </div>
+
+    <div class="fixed inset-0 z-[-1] flex justify-center pointer-events-none opacity-20 dark:opacity-40">
+        <div class="w-full max-w-[1600px] h-full flex justify-between px-4">
+            <div class="w-px h-full bg-gradient-to-b from-transparent via-slate-300 dark:via-white/5 to-transparent"></div>
+            <div class="w-px h-full bg-gradient-to-b from-transparent via-slate-300 dark:via-white/5 to-transparent"></div>
+            <div class="w-px h-full bg-gradient-to-b from-transparent via-slate-300 dark:via-white/5 to-transparent"></div>
+        </div>
+    </div>
+
+    <header class="relative z-50 flex items-center justify-between w-full border-b border-slate-200 dark:border-white/10 bg-white/60 dark:bg-brand-900/60 backdrop-blur-xl">
+        
+        <div class="flex items-center px-6 md:px-8 py-5 border-r border-slate-200 dark:border-white/10 min-w-[150px]">
+            <svg class="w-6 h-6 mr-2.5 text-blue-600 dark:text-white" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M2 5L9 2L14 18L22 4L22 22L14 20L8 7L2 14Z" />
+            </svg>
+            <span class="font-bold tracking-tight text-lg text-slate-900 dark:text-white">VoxAI</span>
+        </div>
+
+        <nav class="hidden lg:flex flex-1 items-center divide-x divide-slate-200 dark:divide-white/10 h-full">
+            <a href="#" class="h-full px-8 py-5 text-sm font-medium hover:bg-slate-100/50 dark:hover:bg-white/5 transition-colors flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+                Platform
+                <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+            <a href="#" class="h-full px-8 py-5 text-sm font-medium hover:bg-slate-100/50 dark:hover:bg-white/5 transition-colors text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Capabilities</a>
+            <a href="#" class="h-full px-8 py-5 text-sm font-medium hover:bg-slate-100/50 dark:hover:bg-white/5 transition-colors text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">Plans</a>
+            <a href="#" class="h-full px-8 py-5 text-sm font-medium hover:bg-slate-100/50 dark:hover:bg-white/5 transition-colors flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+                Company
+                <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+        </nav>
+
+        <div class="flex items-center h-full divide-x divide-slate-200 dark:divide-white/10">
+            <button id="theme-toggle" class="px-6 py-5 flex items-center justify-center hover:bg-slate-100/50 dark:hover:bg-white/5 transition-colors group focus:outline-none" aria-label="Toggle Theme">
+                <svg id="theme-toggle-moon" class="w-5 h-5 text-slate-600 group-hover:text-slate-900 transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                </svg>
+                <svg id="theme-toggle-sun" class="hidden w-5 h-5 text-slate-400 group-hover:text-white transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+                </svg>
+            </button>
+            
+            <button class="hidden md:block px-8 py-5 text-sm font-semibold hover:bg-slate-100/50 dark:hover:bg-white/5 transition-colors text-slate-900 dark:text-white">
+                Launch Dashboard
+            </button>
+            <button class="lg:hidden px-6 py-5 text-slate-600 dark:text-slate-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="relative z-10 flex-grow flex flex-col items-center pt-20 md:pt-32 px-4 w-full max-w-[1400px] mx-auto">
+        
+        <div class="flex flex-col items-center text-center max-w-4xl mx-auto w-full animate-fade-in-up">
+            
+            <div class="flex flex-col items-center mb-8">
+                <svg class="w-24 h-8 mb-4 text-slate-400 dark:text-white/40 animate-pulse-slow" viewBox="0 0 100 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M0 10 Q 5 10, 10 10 T 20 5 T 30 15 T 40 2 T 50 18 T 60 5 T 70 12 T 80 8 T 90 10 T 100 10" />
+                </svg>
+                <p class="text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase text-slate-500 dark:text-slate-400">
+                    OVER 65% OF CRITICAL INSIGHTS GO UNHEARD
+                </p>
+            </div>
+
+            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight leading-[1.05] mb-6 text-slate-900 dark:text-white">
+                Understand Every <br class="hidden md:block" />Voice with AI
+            </h1>
+
+            <p class="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-xl mb-10 font-medium">
+                Analyze conversations in real-time and unlock <br class="hidden sm:block" />actionable data for your entire team.
+            </p>
+
+            <button class="btn-glass rounded-xl flex items-center group transition-all duration-300 hover:scale-[1.02]">
+                <span class="px-6 py-3.5 text-sm font-semibold tracking-wide border-r border-white/20">Start Analysis</span>
+                <span class="px-4 py-3.5 group-hover:translate-x-1 transition-transform">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+            </button>
+        </div>
+
+        <div class="flex-grow min-h-[80px] md:min-h-[140px]"></div>
+
+        <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pb-12 mt-12">
+            
+            <div class="bg-white dark:bg-brand-800 border border-slate-200 dark:border-white/5 rounded-[1.25rem] p-6 md:p-8 hover:-translate-y-2 transition-transform duration-300 shadow-sm hover:shadow-xl dark:shadow-none flex flex-col h-full animate-fade-in-up delay-100 group">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-2xl font-bold text-slate-900 dark:text-white">01<span class="text-[10px] font-semibold text-slate-400 ml-1.5 uppercase tracking-wider relative -top-2">Feature</span></span>
+                    <span class="text-[10px] font-semibold border border-slate-200 dark:border-white/10 px-3 py-1 rounded-full text-slate-500 dark:text-slate-400">Voice to Text</span>
+                </div>
+                
+                <div class="flex-grow flex items-center justify-center mb-12">
+                    <div class="w-24 h-24 rounded-full overflow-hidden bg-slate-50 dark:bg-brand-900 border-[6px] border-slate-100 dark:border-[#1A1F2E] shadow-inner group-hover:scale-110 transition-transform duration-500 relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-cyan-400 opacity-90 dark:opacity-80"></div>
+                        <svg class="absolute inset-0 m-auto w-8 h-8 text-white drop-shadow-md" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">Auto-Scribe</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Transform conversations into highly accurate, searchable transcripts instantly.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-brand-800 border border-slate-200 dark:border-white/5 rounded-[1.25rem] p-6 md:p-8 hover:-translate-y-2 transition-transform duration-300 shadow-sm hover:shadow-xl dark:shadow-none flex flex-col h-full animate-fade-in-up delay-200 group">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-2xl font-bold text-slate-900 dark:text-white">02<span class="text-[10px] font-semibold text-slate-400 ml-1.5 uppercase tracking-wider relative -top-2">Feature</span></span>
+                    <span class="text-[10px] font-semibold border border-slate-200 dark:border-white/10 px-3 py-1 rounded-full text-slate-500 dark:text-slate-400">Call Summaries</span>
+                </div>
+                
+                <div class="flex-grow flex items-center justify-center mb-12">
+                    <div class="w-24 h-24 rounded-full overflow-hidden bg-slate-50 dark:bg-brand-900 border-[6px] border-slate-100 dark:border-[#1A1F2E] shadow-inner group-hover:scale-110 transition-transform duration-500 relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-400 to-teal-500 opacity-90 dark:opacity-80"></div>
+                         <svg class="absolute inset-0 m-auto w-8 h-8 text-white drop-shadow-md" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h10"/><path d="M7 12h10"/><path d="M7 17h6"/></svg>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">Deep Insights</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Automatically extract key action items and generate concise meeting briefs.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-brand-800 border border-slate-200 dark:border-white/5 rounded-[1.25rem] p-6 md:p-8 hover:-translate-y-2 transition-transform duration-300 shadow-sm hover:shadow-xl dark:shadow-none flex flex-col h-full animate-fade-in-up delay-300 group">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-2xl font-bold text-slate-900 dark:text-white">03<span class="text-[10px] font-semibold text-slate-400 ml-1.5 uppercase tracking-wider relative -top-2">Feature</span></span>
+                    <span class="text-[10px] font-semibold border border-slate-200 dark:border-white/10 px-3 py-1 rounded-full text-slate-500 dark:text-slate-400">Emotion AI</span>
+                </div>
+                
+                <div class="flex-grow flex items-center justify-center mb-12">
+                    <div class="w-24 h-24 rounded-full overflow-hidden bg-slate-50 dark:bg-brand-900 border-[6px] border-slate-100 dark:border-[#1A1F2E] shadow-inner group-hover:scale-110 transition-transform duration-500 relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 opacity-90 dark:opacity-80"></div>
+                        <svg class="absolute inset-0 m-auto w-8 h-8 text-white drop-shadow-md" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">Vibe Check</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Analyze vocal tones to detect customer sentiment and emotional shifts.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-brand-800 border border-slate-200 dark:border-white/5 rounded-[1.25rem] p-6 md:p-8 hover:-translate-y-2 transition-transform duration-300 shadow-sm hover:shadow-xl dark:shadow-none flex flex-col h-full animate-fade-in-up delay-400 group">
+                <div class="flex justify-between items-start mb-12">
+                    <span class="text-2xl font-bold text-slate-900 dark:text-white">04<span class="text-[10px] font-semibold text-slate-400 ml-1.5 uppercase tracking-wider relative -top-2">Feature</span></span>
+                    <span class="text-[10px] font-semibold border border-slate-200 dark:border-white/10 px-3 py-1 rounded-full text-slate-500 dark:text-slate-400">Sales Assist</span>
+                </div>
+                
+                <div class="flex-grow flex items-center justify-center mb-12">
+                    <div class="w-24 h-24 rounded-full overflow-hidden bg-slate-50 dark:bg-brand-900 border-[6px] border-slate-100 dark:border-[#1A1F2E] shadow-inner group-hover:scale-110 transition-transform duration-500 relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-orange-500 to-rose-500 opacity-90 dark:opacity-80"></div>
+                        <svg class="absolute inset-0 m-auto w-8 h-8 text-white drop-shadow-md" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">Conversion Lift</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Get live coaching and predictive scripts to close deals significantly faster.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const html = document.documentElement;
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('theme-toggle-sun');
+        const moonIcon = document.getElementById('theme-toggle-moon');
+
+        // Function to apply theme and swap icons
+        function setTheme(isDark) {
+            if (isDark) {
+                html.classList.add('dark');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.classList.remove('dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Check local storage or system preference on load
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        // Toggle Event Listener
+        themeToggleBtn.addEventListener('click', () => {
+            const isCurrentlyDark = html.classList.contains('dark');
+            setTheme(!isCurrentlyDark);
+        });
+    </script>
+</body>
+</html>
